@@ -29,6 +29,7 @@ class Play extends Phaser.Scene {
 		// define keys 
 		keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 		keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+		keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 		keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
 		keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -59,6 +60,10 @@ class Play extends Phaser.Scene {
 		
 		// GAME OVER flag
 		this.gameOver = false;
+		
+		// PAUSE flag
+		this.pause = false;
+		
 		// 60-seconds play clock
 		scoreConfig.fixedWidth = 0;
 		this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
@@ -68,6 +73,11 @@ class Play extends Phaser.Scene {
 		}, null, this);
 	}
 	update(){
+		if (this.pause && !this.gameOver && Phaser.Input.Keyboard.JustDown(keyP)) {
+			this.pause = false;
+		} else if (!this.gameOver && Phaser.Input.Keyboard.JustDown(keyP)) {
+			this.pause = true;
+		}
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
 			this.scene.restart();
 		}
@@ -76,7 +86,7 @@ class Play extends Phaser.Scene {
 		}
 		this.starfield.tilePositionX -= 5;
 		
-		if (!this.gameOver) {
+		if (!this.gameOver && !this.pause) {
 			this.p1Rocket.update();
 			this.ship01.update();
 			this.ship02.update();
