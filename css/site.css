@@ -1,0 +1,47 @@
+body {
+	background-color: pink;
+}
+a {
+	font-family: "Helvetica", "Arial", sans-serif;
+	color: ivory;
+	text-decoration: none;
+	margin: 10px;
+}
+a:hover {
+	color: black;
+}
+
+.navbar {
+	overflow: hidden;
+	position: fixed; /* Set the navbar to fixed position */
+	bottom: 0;
+	width: 100%; /* Full width */
+}
+	
+
+h1 {
+	font-family: "Helvetica", "Arial", sans-serif;
+}
+
+p {
+	font-family: "Helvetica", "Arial", sans-serif;
+}
+
+#game {
+	height: 490px;
+	width: 650px;
+	border: none;
+}
+
+#content {
+	margin-left: auto;
+	margin-right: auto;
+	height: 490px;
+	width: 650px;
+}
+
+#description {
+	margin-left: auto;
+	margin-right: auto;
+	width: 640px;
+}
