@@ -29,6 +29,7 @@ class Play extends Phaser.Scene {
 		keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 		keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
 		keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 	}
 	update(){
 		this.starfield.tilePositionX -= 5;
@@ -36,15 +37,22 @@ class Play extends Phaser.Scene {
 		this.ship01.update();
 		this.ship02.update();
 		this.ship03.update();
+		
 		// check collisions
 		if(this.checkCollison(this.p1Rocket, this.ship03)) {
 			console.log('kaboom ship 03')
+			this.p1Rocket.reset();
+			this.ship03.reset();
 		}
 		if(this.checkCollison(this.p1Rocket, this.ship02)) {
 			console.log('kaboom ship 02')
+			this.p1Rocket.reset();
+			this.ship02.reset();
 		}
 		if(this.checkCollison(this.p1Rocket, this.ship01)) {
 			console.log('kaboom ship 01')
+			this.p1Rocket.reset();
+			this.ship01.reset();
 		}
 	}
 	checkCollison(rocket, ship) {
