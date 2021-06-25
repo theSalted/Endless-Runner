@@ -1,24 +1,18 @@
-@font-face {
-	font-family: "sweet-xx";
-	src: url("./assets/fonts/sweet_xx-bold-webfont.woff2") format("woff2"),
-	url("./assets/fonts/sweet_xx-bold-webfont.woff") format("woff"),
-	url("./assets/fonts/sweet_xx-bold-webfont.ttf") format("ttf");
-}
 
 body {
 	background-color: pink;
 }	
 
 h1 {
-	font-family: "sweet-xx", sans-serif;
+	font-family: "Helvetica", "Arial", sans-serif;
 }
 
 p {
-	font-family: "sweet-xx", sans-serif;
+	font-family: "Helvetica", "Arial", sans-serif;
 }
 
 a {
-	font-family: "sweet-xx";
+	font-family: "Helvetica", "Arial", sans-serif;
 	color: white;
 	text-decoration: none;
 	margin: 10px;
