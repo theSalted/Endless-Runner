@@ -1,12 +1,29 @@
+@font-face {
+	font-family: "sweet-xx";
+	src: url("./assets/fonts/sweet_xx-bold-webfont.woff2") format("woff2"),
+	url("./assets/fonts/sweet_xx-bold-webfont.woff") format("woff"),
+	url("./assets/fonts/sweet_xx-bold-webfont.ttf") format("ttf");
+}
+
 body {
 	background-color: pink;
+}	
+
+h1 {
+	font-family: "sweet-xx", "Helvetica", "Arial", sans-serif;
 }
+
+p {
+	font-family: "sweet-xx", "Helvetica", "Arial", sans-serif;
+}
+
 a {
-	font-family: "Helvetica", "Arial", sans-serif;
-	color: ivory;
+	font-family: "sweet-xx", "Helvetica", "Arial", sans-serif;
+	color: white;
 	text-decoration: none;
 	margin: 10px;
 }
+
 a:hover {
 	color: black;
 }
@@ -16,15 +33,6 @@ a:hover {
 	position: fixed; /* Set the navbar to fixed position */
 	bottom: 0;
 	width: 100%; /* Full width */
-}
-	
-
-h1 {
-	font-family: "Helvetica", "Arial", sans-serif;
-}
-
-p {
-	font-family: "Helvetica", "Arial", sans-serif;
 }
 
 #game {
