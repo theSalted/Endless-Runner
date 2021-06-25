@@ -56,15 +56,21 @@ class Play extends Phaser.Scene {
 			},
 			fixedWidth: 100
 		};
+		
+		//// PAUSE flag
+		this.pause = false;
 		this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
+		scoreConfig.fixedWidth = 0;
+		this.messagePrompt = this.add.text(game.config.width/2, game.config.height/2, 'PAUSE', scoreConfig).setOrigin(0.5).setVisible(false);
+		scoreConfig.fontSize = '20px';
+		this.instructPrompt = this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (P) to Continue or ← for Menu', scoreConfig).setOrigin(0.5).setVisible(false);
 		
 		// GAME OVER flag
 		this.gameOver = false;
 		
-		// PAUSE flag
-		this.pause = false;
 		
 		// 60-seconds play clock
+		scoreConfig.fontSize = '28px';
 		scoreConfig.fixedWidth = 0;
 		this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
 			this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
@@ -73,17 +79,24 @@ class Play extends Phaser.Scene {
 		}, null, this);
 	}
 	update(){
-		if (this.pause && !this.gameOver && Phaser.Input.Keyboard.JustDown(keyP)) {
-			this.pause = false;
-		} else if (!this.gameOver && Phaser.Input.Keyboard.JustDown(keyP)) {
-			this.pause = true;
-		}
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
 			this.scene.restart();
 		}
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
 			this.scene.start("menuScene");
 		}
+		
+		if (!this.pause && !this.gameOver && Phaser.Input.Keyboard.JustDown(keyP)) {
+			this.pause = true;
+			this.messagePrompt.setVisible(true);
+			this.instructPrompt.setVisible(true);
+		} else if (this.pause && Phaser.Input.Keyboard.JustDown(keyP)) {
+			this.messagePrompt.setVisible(false);
+			this.instructPrompt.setVisible(false);
+			console.log("setVisible")
+			this.pause = false;
+		}
+		
 		this.starfield.tilePositionX -= 5;
 		
 		if (!this.gameOver && !this.pause) {
@@ -133,5 +146,13 @@ class Play extends Phaser.Scene {
 		this.p1Score += ship.points;
 		this.scoreLeft.text = this.p1Score;
 		this.sound.play('sfx_explosion');
+	}
+	pauseMenu() {
+		
+		
+		
+	}
+	closePauseMenu() {
+		
 	}
 }
