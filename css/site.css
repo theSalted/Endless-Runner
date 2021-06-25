@@ -10,15 +10,15 @@ body {
 }	
 
 h1 {
-	font-family: sweet-xx, sans-serif;
+	font-family: "sweet-xx", sans-serif;
 }
 
 p {
-	font-family: sweet-xx, sans-serif;
+	font-family: "sweet-xx", sans-serif;
 }
 
 a {
-	font-family: sweet-xx;
+	font-family: "sweet-xx", sans-serif;
 	color: white;
 	text-decoration: none;
 	margin: 10px;
