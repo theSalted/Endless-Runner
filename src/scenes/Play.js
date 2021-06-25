@@ -68,7 +68,6 @@ class Play extends Phaser.Scene {
 		// GAME OVER flag
 		this.gameOver = false;
 		
-		
 		// 60-seconds play clock
 		scoreConfig.fontSize = '28px';
 		scoreConfig.fixedWidth = 0;
@@ -79,10 +78,11 @@ class Play extends Phaser.Scene {
 		}, null, this);
 	}
 	update(){
+		console.log(this.clock.SECOND);
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
 			this.scene.restart();
 		}
-		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+		if ((this.gameOver || this.pause) && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
 			this.scene.start("menuScene");
 		}
 		
@@ -146,13 +146,5 @@ class Play extends Phaser.Scene {
 		this.p1Score += ship.points;
 		this.scoreLeft.text = this.p1Score;
 		this.sound.play('sfx_explosion');
-	}
-	pauseMenu() {
-		
-		
-		
-	}
-	closePauseMenu() {
-		
 	}
 }
