@@ -76,8 +76,11 @@ class Play extends Phaser.Scene {
 			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
 			this.gameOver = true;
 		}, null, this);
+		
 	}
 	update(){
+		//console.log(this.clock.getRemainingSeconds().toString());
+		
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
 			this.scene.restart();
 		}
@@ -89,11 +92,12 @@ class Play extends Phaser.Scene {
 			this.pause = true;
 			this.messagePrompt.setVisible(true);
 			this.instructPrompt.setVisible(true);
+			this.clock.paused = true;
 		} else if (this.pause && Phaser.Input.Keyboard.JustDown(keyP)) {
 			this.messagePrompt.setVisible(false);
 			this.instructPrompt.setVisible(false);
-			console.log("setVisible")
 			this.pause = false;
+			this.clock.paused = false;
 		}
 		
 		this.starfield.tilePositionX -= 5;
