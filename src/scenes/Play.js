@@ -52,6 +52,10 @@ class Play extends Phaser.Scene {
 		// initialize score
 		this.p1Score = 0;
 		this.p2Score = 0;
+		
+		// initialize scrolling speed
+		this.scrollSpeed = 5;
+		
 		// display score
 		let scoreConfig = {
 			fontFamily: 'Courier',
@@ -66,6 +70,8 @@ class Play extends Phaser.Scene {
 			fixedWidth: 100
 		};
 		
+		//speed up flag
+		this.speedUp = false;
 		// PAUSE flag
 		this.pause = false;
 		this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
@@ -74,6 +80,7 @@ class Play extends Phaser.Scene {
 			this.scoreRight = this.add.text(game.config.width - scoreConfig.fixedWidth - borderUISize - borderPadding, 
 			borderUISize + borderPadding * 2, this.p2Score, scoreConfig);
 		}
+			
 		scoreConfig.fixedWidth = 0;
 		this.messagePrompt = this.add.text(game.config.width/2, game.config.height/2, 'PAUSE', scoreConfig).setOrigin(0.5).setVisible(false);
 		scoreConfig.fontSize = '20px';
@@ -91,9 +98,15 @@ class Play extends Phaser.Scene {
 			this.gameOver = true;
 		}, null, this);
 		
+		// initialize time passed
+		this.timePassed = 0;
+		
+		this.timer = this.add.text(game.config.width / 2 - borderUISize * 2 - borderPadding, 
+			borderUISize + borderPadding * 2, 'TIMER: ' + this.clock.getRemainingSeconds(), scoreConfig);
+		
 	}
 	update(){
-		//console.log(this.clock.getRemainingSeconds().toString());
+		
 		
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
 			this.scene.restart();
@@ -113,10 +126,21 @@ class Play extends Phaser.Scene {
 			this.pause = false;
 			this.clock.paused = false;
 		}
+		this.timePassed = game.settings.gameTimer - this.clock.getRemaining();
 		
-		this.starfield.tilePositionX -= 5;
+		if(this.timePassed <= 5000 || this.clock.getRemaining() <= 10000) {
+			this.timer.text = 'TIMER: ' + this.clock.getRemainingSeconds().toString().split('.')[0];
+		} else if(!(this.timePassed  >= 30000) ) {
+			this.timer.text = 'FIRE COMPUTER';
+		}
 		
+		if(this.timePassed  >= 30000 & !this.speedUp) {
+			this.speedUp = true;
+			this.scrollSpeed = 10;
+			this.timer.text = 'SPEED UP';
+		}
 		
+		this.starfield.tilePositionX -= this.scrollSpeed;
 			
 		if (!this.gameOver && !this.pause) {
 			this.p1Rocket.update(keyA, keyD, keyF);
@@ -126,10 +150,11 @@ class Play extends Phaser.Scene {
 				this.p2Rocket.update(keyLEFT, keyRIGHT, keyENTER);
 			}
 			
-			this.ship01.update();
-			this.ship02.update();
-			this.ship03.update();
+			this.ship01.update(this.speedUp);
+			this.ship02.update(this.speedUp);
+			this.ship03.update(this.speedUp);
 		}
+		
 		
 		// check collisions
 		if(this.checkCollison(this.p1Rocket, this.ship03)) {

@@ -5,10 +5,15 @@ class Spaceship extends Phaser.GameObjects.Sprite {
 		scene.add.existing(this);
 		this.points = pointValue;
 		this.moveSpeed = game.settings.spaceshipSpeed;
+		this.speedUpSpeed = game.settings.speedUpSpeed;
 	}
 	
-	update() {
+	update(speedUp = false) {
 		// move spaceship left
+		if(speedUp){
+			this.moveSpeed = this.speedUpSpeed;
+			console.log(this.moveSpeed);
+		}
 		this.x -= this.moveSpeed;
 		// wrap around from left edge to right edge
 		if(this.x <= 0 - this.width) {

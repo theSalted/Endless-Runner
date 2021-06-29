@@ -42,6 +42,7 @@ class Menu extends Phaser.Scene {
 		if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
 			game.settings = {
 				spaceshipSpeed: 3,
+				speedUpSpeed: 4,
 				gameTimer: 60000,
 				is2P: false
 			};
@@ -51,6 +52,7 @@ class Menu extends Phaser.Scene {
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
 			game.settings = {
 				spaceshipSpeed: 4,
+				speedUpSpeed: 6,
 				gameTimer: 45000,
 				is2P: false
 			};
@@ -60,6 +62,7 @@ class Menu extends Phaser.Scene {
 		if (Phaser.Input.Keyboard.JustDown(keyA)) {
 			game.settings = {
 				spaceshipSpeed: 3,
+				speedUpSpeed: 4,
 				gameTimer: 60000,
 				is2P: true
 			};
@@ -69,6 +72,7 @@ class Menu extends Phaser.Scene {
 		if (Phaser.Input.Keyboard.JustDown(keyD)) {
 			game.settings = {
 				spaceshipSpeed: 4,
+				speedUpSpeed: 6,
 				gameTimer: 45000,
 				is2P: true
 			};
