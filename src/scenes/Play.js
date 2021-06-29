@@ -15,7 +15,10 @@ class Play extends Phaser.Scene {
 		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
 		// add rocket (p1)
 		this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(2, 0);
-		this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p2rocket').setOrigin(-2, 0);
+		// add rocket (p2) if in 2P mode
+		if(game.settings.is2P) {
+			this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p2rocket').setOrigin(-2, 0);
+		}
 		// add spaceships
 		this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize * 4, 'spaceship', 0, 30).setOrigin(0, 0);
 		this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20).setOrigin(0, 0);
@@ -48,6 +51,7 @@ class Play extends Phaser.Scene {
 		
 		// initialize score
 		this.p1Score = 0;
+		this.p2Score = 0;
 		// display score
 		let scoreConfig = {
 			fontFamily: 'Courier',
@@ -62,9 +66,14 @@ class Play extends Phaser.Scene {
 			fixedWidth: 100
 		};
 		
-		//// PAUSE flag
+		// PAUSE flag
 		this.pause = false;
 		this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding * 2, this.p1Score, scoreConfig);
+		// add p2 score
+		if(game.settings.is2P) {
+			this.scoreRight = this.add.text(game.config.width - scoreConfig.fixedWidth - borderUISize - borderPadding, 
+			borderUISize + borderPadding * 2, this.p2Score, scoreConfig);
+		}
 		scoreConfig.fixedWidth = 0;
 		this.messagePrompt = this.add.text(game.config.width/2, game.config.height/2, 'PAUSE', scoreConfig).setOrigin(0.5).setVisible(false);
 		scoreConfig.fontSize = '20px';
@@ -107,9 +116,16 @@ class Play extends Phaser.Scene {
 		
 		this.starfield.tilePositionX -= 5;
 		
+		
+			
 		if (!this.gameOver && !this.pause) {
 			this.p1Rocket.update(keyA, keyD, keyF);
-			this.p2Rocket.update(keyLEFT, keyRIGHT, keyENTER);
+			
+			// update based on player mode
+			if(game.settings.is2P) {
+				this.p2Rocket.update(keyLEFT, keyRIGHT, keyENTER);
+			}
+			
 			this.ship01.update();
 			this.ship02.update();
 			this.ship03.update();
@@ -118,28 +134,36 @@ class Play extends Phaser.Scene {
 		// check collisions
 		if(this.checkCollison(this.p1Rocket, this.ship03)) {
 			this.p1Rocket.reset();
-			this.shipExplode(this.ship03);
+			this.p1Score += this.shipExplode(this.ship03);
+			this.scoreLeft.text = this.p1Score;
 		}
 		if(this.checkCollison(this.p1Rocket, this.ship02)) {
 			this.p1Rocket.reset();
-			this.shipExplode(this.ship02);
+			this.p1Score += this.shipExplode(this.ship02);
+			this.scoreLeft.text = this.p1Score;
 		}
 		if(this.checkCollison(this.p1Rocket, this.ship01)) {
 			this.p1Rocket.reset();
-			this.shipExplode(this.ship01);
+			this.p1Score += this.shipExplode(this.ship01);
+			this.scoreLeft.text = this.p1Score;
 		}
 		
-		if(this.checkCollison(this.p2Rocket, this.ship03)) {
-			this.p2Rocket.reset();
-			this.shipExplode(this.ship03);
-		}
-		if(this.checkCollison(this.p2Rocket, this.ship02)) {
-			this.p2Rocket.reset();
-			this.shipExplode(this.ship02);
-		}
-		if(this.checkCollison(this.p2Rocket, this.ship01)) {
-			this.p2Rocket.reset();
-			this.shipExplode(this.ship01);
+		if(game.settings.is2P) {
+			if(this.checkCollison(this.p2Rocket, this.ship03)) {
+				this.p2Rocket.reset();
+				this.p2Score += this.shipExplode(this.ship03);
+				this.scoreRight.text = this.p2Score;
+			}
+			if(this.checkCollison(this.p2Rocket, this.ship02)) {
+				this.p2Rocket.reset();
+				this.p2Score += this.shipExplode(this.ship02);
+				this.scoreRight.text = this.p2Score;
+			}
+			if(this.checkCollison(this.p2Rocket, this.ship01)) {
+				this.p2Rocket.reset();
+				this.p2Score += this.shipExplode(this.ship01);
+				this.scoreRight.text = this.p2Score;
+			}
 		}
 	}
 	checkCollison(rocket, ship) {
@@ -164,9 +188,8 @@ class Play extends Phaser.Scene {
 			ship.alpha = 1;
 			boom.destroy();
 		});
-		// score add and repaint
-		this.p1Score += ship.points;
-		this.scoreLeft.text = this.p1Score;
+		
 		this.sound.play('sfx_explosion');
+		return ship.points;
 	}
 }

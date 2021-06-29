@@ -35,12 +35,15 @@ class Menu extends Phaser.Scene {
 		//defines key
 		keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
 		keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+		keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+		keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 	}
 	update() {
 		if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
 			game.settings = {
 				spaceshipSpeed: 3,
-				gameTimer: 60000
+				gameTimer: 60000,
+				is2P: false
 			};
 			this.sound.play('sfx_select');
 			this.scene.start('playScene');
@@ -48,7 +51,26 @@ class Menu extends Phaser.Scene {
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
 			game.settings = {
 				spaceshipSpeed: 4,
-				gameTimer: 45000
+				gameTimer: 45000,
+				is2P: false
+			};
+			this.sound.play('sfx_select');
+			this.scene.start('playScene');
+		}
+		if (Phaser.Input.Keyboard.JustDown(keyA)) {
+			game.settings = {
+				spaceshipSpeed: 3,
+				gameTimer: 60000,
+				is2P: true
+			};
+			this.sound.play('sfx_select');
+			this.scene.start('playScene');
+		}
+		if (Phaser.Input.Keyboard.JustDown(keyD)) {
+			game.settings = {
+				spaceshipSpeed: 4,
+				gameTimer: 45000,
+				is2P: true
 			};
 			this.sound.play('sfx_select');
 			this.scene.start('playScene');
