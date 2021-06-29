@@ -104,10 +104,10 @@ class Play extends Phaser.Scene {
 		this.timer = this.add.text(game.config.width / 2 - borderUISize * 2 - borderPadding, 
 			borderUISize + borderPadding * 2, 'TIMER: ' + this.clock.getRemainingSeconds(), scoreConfig);
 		
+		this.speedAfter = 30000;
+		
 	}
 	update(){
-		
-		
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
 			this.scene.restart();
 		}
@@ -128,16 +128,17 @@ class Play extends Phaser.Scene {
 		}
 		this.timePassed = game.settings.gameTimer - this.clock.getRemaining();
 		
-		if(this.timePassed <= 5000 || this.clock.getRemaining() <= 10000) {
+		if(this.timePassed <= 5000 || this.clock.getRemaining() <= 10000 || game.settings.timerAlwaysDisplay) {
 			this.timer.text = 'TIMER: ' + this.clock.getRemainingSeconds().toString().split('.')[0];
-		} else if(!(this.timePassed  >= 30000) ) {
+		} else if(this.timePassed  >= this.speedAfter) {
+			this.timer.text = 'SPEED UP';
+		} else{
 			this.timer.text = 'FIRE COMPUTER';
 		}
 		
-		if(this.timePassed  >= 30000 & !this.speedUp) {
+		if(this.timePassed >= this.speedAfter & !this.speedUp) {
 			this.speedUp = true;
 			this.scrollSpeed = 10;
-			this.timer.text = 'SPEED UP';
 		}
 		
 		this.starfield.tilePositionX -= this.scrollSpeed;

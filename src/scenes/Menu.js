@@ -37,43 +37,79 @@ class Menu extends Phaser.Scene {
 		keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 		keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 		keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+		keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 	}
 	update() {
+		// novice mode
 		if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
 			game.settings = {
 				spaceshipSpeed: 3,
 				speedUpSpeed: 4,
 				gameTimer: 60000,
+				speedUpAfter: 30000,
+				timerAlwaysDisplay: false,
+				endranceMode: false,
+				testMode: false,
 				is2P: false
 			};
 			this.sound.play('sfx_select');
 			this.scene.start('playScene');
 		}
+		// export mode
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
 			game.settings = {
 				spaceshipSpeed: 4,
 				speedUpSpeed: 6,
 				gameTimer: 45000,
+				speedUpAfter: 20000,
+				timerAlwaysDisplay: false,
+				endranceMode: false,
+				testMode: false,
 				is2P: false
 			};
 			this.sound.play('sfx_select');
 			this.scene.start('playScene');
 		}
+		// novice 2p
 		if (Phaser.Input.Keyboard.JustDown(keyA)) {
 			game.settings = {
 				spaceshipSpeed: 3,
 				speedUpSpeed: 4,
 				gameTimer: 60000,
+				speedUpAfter: 30000,
+				timerAlwaysDisplay: false,
+				endranceMode: false,
+				testMode: false,
 				is2P: true
 			};
 			this.sound.play('sfx_select');
 			this.scene.start('playScene');
 		}
+		// export 2p
 		if (Phaser.Input.Keyboard.JustDown(keyD)) {
 			game.settings = {
 				spaceshipSpeed: 4,
 				speedUpSpeed: 6,
 				gameTimer: 45000,
+				speedUpAfter: 20000,
+				timerAlwaysDisplay: false,
+				endranceMode: false,
+				testMode: false,
+				is2P: true
+			};
+			this.sound.play('sfx_select');
+			this.scene.start('playScene');
+		}
+		// test mode
+		if (Phaser.Input.Keyboard.JustDown(keyF)) {
+			game.settings = {
+				spaceshipSpeed: 2,
+				speedUpSpeed: 3,
+				gameTimer: 30000,
+				speedUpAfter: 6000,
+				timerAlwaysDisplay: true,
+				endranceMode: true,
+				testMode: true,
 				is2P: true
 			};
 			this.sound.play('sfx_select');

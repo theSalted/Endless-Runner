@@ -12,7 +12,6 @@ class Spaceship extends Phaser.GameObjects.Sprite {
 		// move spaceship left
 		if(speedUp){
 			this.moveSpeed = this.speedUpSpeed;
-			console.log(this.moveSpeed);
 		}
 		this.x -= this.moveSpeed;
 		// wrap around from left edge to right edge
