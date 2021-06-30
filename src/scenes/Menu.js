@@ -108,9 +108,9 @@ class Menu extends Phaser.Scene {
 				gameTimer: 5000,
 				speedUpAfter: 6000,
 				timerAlwaysDisplay: true,
-				endranceMode: false,
+				endranceMode: true,
 				testMode: true,
-				is2P: true
+				is2P: false
 			};
 			this.sound.play('sfx_select');
 			this.scene.start('playScene');
