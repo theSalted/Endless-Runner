@@ -31,6 +31,7 @@ class Play extends Phaser.Scene {
 		this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
 		this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
 		this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
+		
 		// define keys 
 		keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 		keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -93,19 +94,26 @@ class Play extends Phaser.Scene {
 		scoreConfig.fontSize = '28px';
 		scoreConfig.fixedWidth = 0;
 		this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-			this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
-			this.gameOver = true;
+			if(!game.settings.endranceMode) {
+				this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+				this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+				this.gameOver = true;
+			} else {
+				this.enduranceMode();
+			}
+			
 		}, null, this);
 		
 		// initialize time passed
 		this.timePassed = 0;
 		
+		// initialize bonus time
+		this.isBonusRewarded = false;
+		
 		this.timer = this.add.text(game.config.width / 2 - borderUISize * 2 - borderPadding, 
 			borderUISize + borderPadding * 2, 'TIMER: ' + this.clock.getRemainingSeconds(), scoreConfig);
 		
 		this.speedAfter = 30000;
-		
 	}
 	update(){
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
@@ -128,12 +136,14 @@ class Play extends Phaser.Scene {
 		}
 		this.timePassed = game.settings.gameTimer - this.clock.getRemaining();
 		
-		if(this.timePassed <= 5000 || this.clock.getRemaining() <= 10000 || game.settings.timerAlwaysDisplay) {
+		if((this.timePassed <= 5000 || this.clock.getRemaining() <= 10000 || game.settings.timerAlwaysDisplay) & this.isBonusRewarded == false) {
 			this.timer.text = 'TIMER: ' + this.clock.getRemainingSeconds().toString().split('.')[0];
-		} else if(this.timePassed  >= this.speedAfter) {
+		} else if(this.timePassed  >= this.speedAfter & this.isBonusRewarded == false) {
 			this.timer.text = 'SPEED UP';
-		} else{
+		} else if(this.isBonusRewarded == false) {
 			this.timer.text = 'FIRE COMPUTER';
+		} else if(this.isBonusRewarded == true) {
+			this.timer.text = 'BONUS: ' + this.bounusClock.getRemainingSeconds().toString().split('.')[0];
 		}
 		
 		if(this.timePassed >= this.speedAfter & !this.speedUp) {
@@ -217,5 +227,26 @@ class Play extends Phaser.Scene {
 		
 		this.sound.play('sfx_explosion');
 		return ship.points;
+	}
+	enduranceMode() {
+		let scoreConfig = {
+			fontFamily: 'Courier',
+			fontSize: '28px',
+			backgroundColor: '#F3B141',
+			color: '#843605',
+			align: 'right',
+			padding: {
+				top: 5,
+				bottom: 5,
+			},
+			fixedWidth: 0
+		};
+		this.isBonusRewarded = true;
+		this.bounusTime = 5000 + (this.p1Score * 700);
+		this.bounusClock = this.time.delayedCall(this.bounusTime, () => {
+			this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+			this.gameOver = true;
+		}, null, this);
 	}
 }

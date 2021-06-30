@@ -48,7 +48,7 @@ class Menu extends Phaser.Scene {
 				gameTimer: 60000,
 				speedUpAfter: 30000,
 				timerAlwaysDisplay: false,
-				endranceMode: false,
+				endranceMode: true,
 				testMode: false,
 				is2P: false
 			};
