@@ -13,13 +13,22 @@ class Rocket extends Phaser.GameObjects.Sprite {
 	update(isMouseControl = false, x, isMouseClicked = false) {
 		// left/right movement
 		if(isMouseControl) {
-			if(!this.isFiring) {
+			if(!this.isFiring || this.controlMidAir) {
 				if(x < this.x && this.x >= borderUISize + this.width) {
 					this.x -= this.moveSpeed;
 				} else if (x > this.x && this.x <= game.config.width - borderUISize - this.width) {
 					this.x += this.moveSpeed;
 				}
 			}
+			
+			if(this.isFiring && game.settings.midAirControl) {
+				if(x < this.x && this.x >= borderUISize + this.width){
+					this.x -= this.moveSpeed * 0.5;
+				} else if (x > this.x && this.x <= game.config.width - borderUISize - this.width) {
+					this.x += this.moveSpeed * 0.5;
+				}
+			}
+			
 			if(isMouseClicked && !this.isFiring) {
 				this.isFiring = true;
 				this.sfxRocket.play();
@@ -30,6 +39,14 @@ class Rocket extends Phaser.GameObjects.Sprite {
 					this.x -= this.moveSpeed;
 				} else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
 					this.x += this.moveSpeed;
+				}
+			}
+			
+			if(this.isFiring && game.settings.midAirControl) {
+				if(keyLEFT.isDown && this.x >= borderUISize + this.width){
+					this.x -= this.moveSpeed * 0.5;
+				} else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
+					this.x += this.moveSpeed * 0.5;
 				}
 			}
 			// fire button

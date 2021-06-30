@@ -38,6 +38,7 @@ class Menu extends Phaser.Scene {
 		keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 		keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 		keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 		
 		// initialize high score
 		game.highScore = 0;
@@ -53,6 +54,7 @@ class Menu extends Phaser.Scene {
 				timerAlwaysDisplay: false,
 				endranceMode: true,
 				testMode: false,
+				midAirControl: true,
 				is2P: false
 			};
 			this.sound.play('sfx_select');
@@ -68,6 +70,7 @@ class Menu extends Phaser.Scene {
 				timerAlwaysDisplay: false,
 				endranceMode: true,
 				testMode: false,
+				midAirControl: false,
 				is2P: false
 			};
 			this.sound.play('sfx_select');
@@ -83,6 +86,7 @@ class Menu extends Phaser.Scene {
 				timerAlwaysDisplay: false,
 				endranceMode: false,
 				testMode: false,
+				midAirControl: true,
 				is2P: true
 			};
 			this.sound.play('sfx_select');
@@ -98,6 +102,7 @@ class Menu extends Phaser.Scene {
 				timerAlwaysDisplay: false,
 				endranceMode: false,
 				testMode: false,
+				midAirControl: false,
 				is2P: true
 			};
 			this.sound.play('sfx_select');
@@ -113,6 +118,7 @@ class Menu extends Phaser.Scene {
 				timerAlwaysDisplay: true,
 				endranceMode: false,
 				testMode: true,
+				midAirControl: false,
 				is2P: false
 			};
 			this.sound.play('sfx_select');
