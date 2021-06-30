@@ -63,7 +63,7 @@ class Menu extends Phaser.Scene {
 				gameTimer: 45000,
 				speedUpAfter: 20000,
 				timerAlwaysDisplay: false,
-				endranceMode: false,
+				endranceMode: true,
 				testMode: false,
 				is2P: false
 			};
@@ -105,10 +105,10 @@ class Menu extends Phaser.Scene {
 			game.settings = {
 				spaceshipSpeed: 2,
 				speedUpSpeed: 3,
-				gameTimer: 30000,
+				gameTimer: 5000,
 				speedUpAfter: 6000,
 				timerAlwaysDisplay: true,
-				endranceMode: true,
+				endranceMode: false,
 				testMode: true,
 				is2P: true
 			};

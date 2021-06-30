@@ -11,13 +11,19 @@ class Play extends Phaser.Scene {
 		this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9})
 	}
 	create() {
+		
+		if(game.settings.endranceMode && game.settings.is2P){
+			console.log("RP: endranceMode and is 2P can't enable at same time (endranceMode has setten to false)");
+			game.settings.endranceMode = false;
+		}
+		
 		// place tile sprite
 		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
 		// add rocket (p1)
-		this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(2, 0);
+		this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
 		// add rocket (p2) if in 2P mode
 		if(game.settings.is2P) {
-			this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p2rocket').setOrigin(-2, 0);
+			this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p2rocket').setOrigin(0.5, 0);
 		}
 		// add spaceships
 		this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize * 4, 'spaceship', 0, 30).setOrigin(0, 0);
@@ -94,12 +100,13 @@ class Play extends Phaser.Scene {
 		scoreConfig.fontSize = '28px';
 		scoreConfig.fixedWidth = 0;
 		this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-			if(!game.settings.endranceMode) {
+			
+			if(game.settings.endranceMode && !game.settings.is2P) {
+				this.enduranceMode();
+			} else {
 				this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
 				this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
 				this.gameOver = true;
-			} else {
-				this.enduranceMode();
 			}
 			
 		}, null, this);
@@ -128,11 +135,17 @@ class Play extends Phaser.Scene {
 			this.messagePrompt.setVisible(true);
 			this.instructPrompt.setVisible(true);
 			this.clock.paused = true;
+			if(this.isBonusRewarded) {
+				this.bounusClock.paused = true;
+			}
 		} else if (this.pause && Phaser.Input.Keyboard.JustDown(keyP)) {
 			this.messagePrompt.setVisible(false);
 			this.instructPrompt.setVisible(false);
 			this.pause = false;
 			this.clock.paused = false;
+			if(this.isBonusRewarded) {
+				this.bounusClock.paused = false;
+			}
 		}
 		this.timePassed = game.settings.gameTimer - this.clock.getRemaining();
 		
@@ -154,11 +167,11 @@ class Play extends Phaser.Scene {
 		this.starfield.tilePositionX -= this.scrollSpeed;
 			
 		if (!this.gameOver && !this.pause) {
-			this.p1Rocket.update(keyA, keyD, keyF);
+			this.p1Rocket.update();
 			
 			// update based on player mode
 			if(game.settings.is2P) {
-				this.p2Rocket.update(keyLEFT, keyRIGHT, keyENTER);
+				this.p2Rocket.update(true, this.input.activePointer.x, this.input.activePointer.isDown);
 			}
 			
 			this.ship01.update(this.speedUp);
@@ -242,7 +255,7 @@ class Play extends Phaser.Scene {
 			fixedWidth: 0
 		};
 		this.isBonusRewarded = true;
-		this.bounusTime = 5000 + (this.p1Score * 700);
+		this.bounusTime = 5000 + (this.p1Score * 70);
 		this.bounusClock = this.time.delayedCall(this.bounusTime, () => {
 			this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
 			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);

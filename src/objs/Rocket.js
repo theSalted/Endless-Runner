@@ -8,21 +8,38 @@ class Rocket extends Phaser.GameObjects.Sprite {
 		this.isFiring = false;
 		this.moveSpeed = 2;
 		this.sfxRocket = scene.sound.add('sfx_rocket');
+		//game.input.mouse.capture = true;
 	}
-	update(inputL, inputR, inputF) {
+	update(isMouseControl = false, x, isMouseClicked = false) {
 		// left/right movement
-		if(!this.isFiring) {
-			if(inputL.isDown && this.x >= borderUISize + this.width){
-				this.x -= this.moveSpeed;
-			} else if (inputR.isDown && this.x <= game.config.width - borderUISize - this.width) {
-				this.x += this.moveSpeed;
+		if(isMouseControl) {
+			if(!this.isFiring) {
+				if(x < this.x && this.x >= borderUISize + this.width) {
+					this.x -= this.moveSpeed;
+				} else if (x > this.x && this.x <= game.config.width - borderUISize - this.width) {
+					this.x += this.moveSpeed;
+				}
 			}
+			if(isMouseClicked && !this.isFiring) {
+				this.isFiring = true;
+				this.sfxRocket.play();
+			}
+		} else {
+			if(!this.isFiring) {
+				if(keyLEFT.isDown && this.x >= borderUISize + this.width){
+					this.x -= this.moveSpeed;
+				} else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
+					this.x += this.moveSpeed;
+				}
+			}
+			// fire button
+			if((Phaser.Input.Keyboard.JustDown(keyF) || Phaser.Input.Keyboard.JustDown(keySPACE)) && !this.isFiring) {
+				this.isFiring = true;
+				this.sfxRocket.play();
+			}
+			
 		}
-		// fire button
-		if(Phaser.Input.Keyboard.JustDown(inputF)) {
-			this.isFiring = true;
-			this.sfxRocket.play();
-		}
+		
 		// if fired move up
 		if(this.isFiring && this.y >= borderUISize * 3 + borderPadding) {
 			this.y -= this.moveSpeed;
