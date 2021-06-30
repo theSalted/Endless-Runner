@@ -25,24 +25,31 @@ class Play extends Phaser.Scene {
 		if(game.settings.is2P) {
 			this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p2rocket').setOrigin(0.5, 0);
 		}
-		// add spaceships
+		
+		// add random spaceships
 		this.speed = game.settings.spaceshipSpeed;
 		this.speedUpSpeed = game.settings.speedUpSpeed;
 		if(Math.random() < 0.5) {
 			this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize * 4, 'spaceship', 0, 30, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
 		} else {
 			this.ship01 = new Spaceship(this, -borderUISize*6, borderUISize * 4, 'spaceship', 0, 30, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
+			this.ship01.flipX = true
 		}
+		
 		if(Math.random() < 0.5) {
 			this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
 		} else {
 			this.ship02 = new Spaceship(this, -borderUISize*3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
+			this.ship02.flipX = true
 		}
+		
 		if(Math.random() < 0.5) {
 			this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding * 4, 'spaceship', 0, 10, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
 		} else {
 			this.ship03 = new Spaceship(this, 0, borderUISize*6 + borderPadding * 4, 'spaceship', 0, 10, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
+			this.ship03.flipX = true
 		}
+		
 		// green UI background
 		this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x37946e).setOrigin(0, 0);
 		// white borders
@@ -244,6 +251,11 @@ class Play extends Phaser.Scene {
 		ship.alpha = 0;
 		// create explosion 
 		let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
+		if(ship.left2Right) {
+			boom.flipX = true
+		} else {
+			boom.flipX = false
+		}
 		boom.anims.play('explode');
 		boom.on('animationcomplete', () => {
 			ship.reset();
