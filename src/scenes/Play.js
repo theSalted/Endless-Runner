@@ -117,18 +117,12 @@ class Play extends Phaser.Scene {
 		this.gameOver = false;
 		
 		// 60-seconds play clock
-		scoreConfig.fontSize = '28px';
-		scoreConfig.fixedWidth = 0;
 		this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-			
 			if(game.settings.endranceMode && !game.settings.is2P) {
 				this.enduranceMode();
 			} else {
-				this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-				this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
-				this.gameOver = true;
+				this.gameOverDisplay();
 			}
-			
 		}, null, this);
 		
 		// initialize time passed
@@ -137,6 +131,8 @@ class Play extends Phaser.Scene {
 		// initialize bonus time
 		this.isBonusRewarded = false;
 		
+		scoreConfig.fontSize = '28px';
+		scoreConfig.fixedWidth = 0;
 		this.timer = this.add.text(game.config.width / 2 - borderUISize * 2 - borderPadding, 
 			borderUISize + borderPadding * 2, 'TIMER: ' + this.clock.getRemainingSeconds(), scoreConfig);
 		
@@ -267,6 +263,13 @@ class Play extends Phaser.Scene {
 		return ship.points;
 	}
 	enduranceMode() {
+		this.isBonusRewarded = true;
+		this.bounusTime = 5000 + (this.p1Score * 70);
+		this.bounusClock = this.time.delayedCall(this.bounusTime, () => {
+			this.gameOverDisplay();
+		}, null, this);
+	}
+	gameOverDisplay() {
 		let scoreConfig = {
 			fontFamily: 'Courier',
 			fontSize: '28px',
@@ -279,12 +282,31 @@ class Play extends Phaser.Scene {
 			},
 			fixedWidth: 0
 		};
-		this.isBonusRewarded = true;
-		this.bounusTime = 5000 + (this.p1Score * 70);
-		this.bounusClock = this.time.delayedCall(this.bounusTime, () => {
+		
+		this.isNewHighScore = false;
+		
+		if(game.highScore < this.p1Score) {
+			game.highScore = this.p1Score;
+			this.isNewHighScore = true;
+		}
+		
+		if(game.highScore < this.p2Score) {
+			game.highScore = this.p2Score;
+			this.isNewHighScore = true;
+		}
+		
+		if(game.highScore == 0) {
 			this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
 			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
-			this.gameOver = true;
-		}, null, this);
+		} else if(this.isNewHighScore) {
+			this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER', scoreConfig).setOrigin(0.5);
+			this.add.text(game.config.width/2, game.config.height/2, 'High Score: ' + game.highScore, scoreConfig).setOrigin(0.5);
+			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+		} else {
+			this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER', scoreConfig).setOrigin(0.5);
+			this.add.text(game.config.width/2, game.config.height/2, 'NEW High Score: ' + game.highScore, scoreConfig).setOrigin(0.5);
+			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+		}
+		this.gameOver = true;
 	}
 }

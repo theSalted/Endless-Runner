@@ -38,6 +38,9 @@ class Menu extends Phaser.Scene {
 		keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 		keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 		keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+		
+		// initialize high score
+		game.highScore = 0;
 	}
 	update() {
 		// novice mode
@@ -105,10 +108,10 @@ class Menu extends Phaser.Scene {
 			game.settings = {
 				spaceshipSpeed: 2,
 				speedUpSpeed: 3,
-				gameTimer: 5000,
+				gameTimer: 3000,
 				speedUpAfter: 6000,
 				timerAlwaysDisplay: true,
-				endranceMode: true,
+				endranceMode: false,
 				testMode: true,
 				is2P: false
 			};
