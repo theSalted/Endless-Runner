@@ -21,7 +21,7 @@ class Menu extends Phaser.Scene {
 				bottom: 5
 			},
 			fixedWidth: 0
-		}
+		};
 		
 		// show menu text
 		this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
