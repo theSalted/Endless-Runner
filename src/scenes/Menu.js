@@ -13,6 +13,7 @@ class Menu extends Phaser.Scene {
 		this.load.image('mounts', './assets/mounts.png');
 		this.load.image('clouds', './assets/cloud.png');
 		this.load.image('starfield', './assets/starfield.png');
+		this.load.audio('background_music','./assets/escape_basic.wav');
 		this.load.spritesheet('rollingBear', './assets/bearsheet.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 4})
 	}
 	create() {
@@ -21,6 +22,13 @@ class Menu extends Phaser.Scene {
 		this.clouds = this.add.tileSprite(0, 0, 640, 480, 'clouds').setOrigin(0, 0);
 		this.mounts = this.add.tileSprite(0, 0, 640, 480, 'mounts').setOrigin(0, 0);
 		this.forest = this.add.tileSprite(0, 0, 640, 480, 'forest').setOrigin(0, 0);
+		
+		
+		this.music =  this.sound.add('background_music', {
+			volume: 0.8,
+			loop: true
+		})
+		this.music.play()
 		
 		
 		this.anims.create({
@@ -97,6 +105,7 @@ class Menu extends Phaser.Scene {
 				is2P: false
 			};
 			this.sound.play('sfx_select');
+			this.music.destroy()
 			this.scene.start('playScene');
 		}
 		// export mode
@@ -113,6 +122,7 @@ class Menu extends Phaser.Scene {
 				is2P: false
 			};
 			this.sound.play('sfx_select');
+			this.music.destroy()
 			this.scene.start('playScene');
 		}
 		// novice 2p
@@ -129,6 +139,7 @@ class Menu extends Phaser.Scene {
 				is2P: true
 			};
 			this.sound.play('sfx_select');
+			this.music.destroy()
 			this.scene.start('playScene');
 		}
 		// export 2p
@@ -145,6 +156,7 @@ class Menu extends Phaser.Scene {
 				is2P: true
 			};
 			this.sound.play('sfx_select');
+			this.music.destroy()
 			this.scene.start('playScene');
 		}
 		// test mode
@@ -161,6 +173,7 @@ class Menu extends Phaser.Scene {
 				is2P: false
 			};
 			this.sound.play('sfx_select');
+			this.music.destroy()
 			this.scene.start('playScene');
 		}
 	}

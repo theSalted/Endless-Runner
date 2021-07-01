@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
 		this.load.image('starfield', './assets/starfield.png');
 		this.load.spritesheet('explosion', './assets/bearexplode.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9})
 		this.load.spritesheet('rollingBear', './assets/bearsheet.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 4})
+		this.load.audio('background_drum','./assets/escape_drum.wav');
 	}
 	create() {
 		
@@ -112,6 +113,11 @@ class Play extends Phaser.Scene {
 		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 		keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 		
+		this.music =  this.sound.add('background_drum', {
+			volume: 0.8,
+			loop: true
+		})
+		this.music.play()
 		
 		// initialize score
 		this.p1Score = 0;
@@ -176,9 +182,11 @@ class Play extends Phaser.Scene {
 	}
 	update(){
 		if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+			this.music.destroy()
 			this.scene.restart();
 		}
 		if ((this.gameOver || this.pause) && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+			this.music.destroy()
 			this.scene.start("menuScene");
 		}
 		
@@ -211,9 +219,11 @@ class Play extends Phaser.Scene {
 			this.timer.text = 'BONUS: ' + this.bounusClock.getRemainingSeconds().toString().split('.')[0];
 		}
 		
+		// speed up logic
 		if(this.timePassed >= this.speedAfter & !this.speedUp) {
+			this.music.setRate(1.5)
 			this.speedUp = true;
-			this.scrollSpeed = 5;
+			this.scrollSpeed = game.settings.speedUpSpeed;
 		}
 		
 		this.starfield.tilePositionX -= this.scrollSpeed;
