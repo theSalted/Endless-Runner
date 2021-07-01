@@ -5,6 +5,8 @@ https://github.com/theSalted/ModRocketPatrol
 
 Here is my point breakdown:
 
+- Redesign the game's artwork, UI, and sound to change its theme/aesthetic (to something other than sci-fi) (60)
+- Add your own (copyright-free) background music to the Play scene (5)
 - Create a new title screen (e.g., new artwork, typography, layout) (10)
 - Create a new animated sprite for the Spaceship enemies (10)
 - Implement parallax scrolling (10)
