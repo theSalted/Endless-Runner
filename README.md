@@ -5,6 +5,7 @@ https://github.com/theSalted/ModRocketPatrol
 
 Here is my point breakdown:
 
+- Create a new title screen (e.g., new artwork, typography, layout) (10)
 - Create a new animated sprite for the Spaceship enemies (10)
 - Implement parallax scrolling (10)
 - Allow the player to control the Rocket after it's fired (5)

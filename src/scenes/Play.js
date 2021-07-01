@@ -94,7 +94,7 @@ class Play extends Phaser.Scene {
 		this.ship03.play('rolling');
 		
 		// green UI background
-		this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x37946e).setOrigin(0, 0);
+		// this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x305182).setOrigin(0, 0);
 		// white borders
 		this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
 		this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
@@ -122,10 +122,9 @@ class Play extends Phaser.Scene {
 		
 		// display score
 		let scoreConfig = {
-			fontFamily: 'Courier',
+			fontFamily: 'Impact',
 			fontSize: '28px',
-			backgroundColor: '#F3B141',
-			color: '#843605',
+			color: '#FFFFFF',
 			align: 'right',
 			padding: {
 				top: 5,
@@ -207,7 +206,7 @@ class Play extends Phaser.Scene {
 		} else if(this.timePassed  >= this.speedAfter & this.isBonusRewarded == false) {
 			this.timer.text = 'SPEED UP';
 		} else if(this.isBonusRewarded == false) {
-			this.timer.text = 'FIRE COMPUTER';
+			this.timer.text = 'RAINBOW COMP';
 		} else if(this.isBonusRewarded == true) {
 			this.timer.text = 'BONUS: ' + this.bounusClock.getRemainingSeconds().toString().split('.')[0];
 		}
@@ -311,10 +310,9 @@ class Play extends Phaser.Scene {
 	}
 	gameOverDisplay() {
 		let scoreConfig = {
-			fontFamily: 'Courier',
+			fontFamily: 'Impact',
 			fontSize: '28px',
-			backgroundColor: '#F3B141',
-			color: '#843605',
+			color: '#FFFFFF',
 			align: 'right',
 			padding: {
 				top: 5,
