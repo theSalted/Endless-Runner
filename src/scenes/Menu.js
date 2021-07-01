@@ -47,8 +47,8 @@ class Menu extends Phaser.Scene {
 		// novice mode
 		if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
 			game.settings = {
-				spaceshipSpeed: 3,
-				speedUpSpeed: 4,
+				spaceshipSpeed: 3.5,
+				speedUpSpeed: 4.5,
 				gameTimer: 60000,
 				speedUpAfter: 30000,
 				timerAlwaysDisplay: false,
@@ -63,8 +63,8 @@ class Menu extends Phaser.Scene {
 		// export mode
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
 			game.settings = {
-				spaceshipSpeed: 4,
-				speedUpSpeed: 6,
+				spaceshipSpeed: 4.5,
+				speedUpSpeed: 5.5,
 				gameTimer: 45000,
 				speedUpAfter: 20000,
 				timerAlwaysDisplay: false,
@@ -79,8 +79,8 @@ class Menu extends Phaser.Scene {
 		// novice 2p
 		if (Phaser.Input.Keyboard.JustDown(keyA)) {
 			game.settings = {
-				spaceshipSpeed: 3,
-				speedUpSpeed: 4,
+				spaceshipSpeed: 3.5,
+				speedUpSpeed: 4.5,
 				gameTimer: 60000,
 				speedUpAfter: 30000,
 				timerAlwaysDisplay: false,
@@ -95,8 +95,8 @@ class Menu extends Phaser.Scene {
 		// export 2p
 		if (Phaser.Input.Keyboard.JustDown(keyD)) {
 			game.settings = {
-				spaceshipSpeed: 4,
-				speedUpSpeed: 6,
+				spaceshipSpeed: 4.5,
+				speedUpSpeed: 5.5,
 				gameTimer: 45000,
 				speedUpAfter: 20000,
 				timerAlwaysDisplay: false,
@@ -111,8 +111,8 @@ class Menu extends Phaser.Scene {
 		// test mode
 		if (Phaser.Input.Keyboard.JustDown(keyF)) {
 			game.settings = {
-				spaceshipSpeed: 2,
-				speedUpSpeed: 3,
+				spaceshipSpeed: 2.5,
+				speedUpSpeed: 3.5,
 				gameTimer: 3000,
 				speedUpAfter: 6000,
 				timerAlwaysDisplay: true,

@@ -7,6 +7,9 @@ class Play extends Phaser.Scene {
 		this.load.image('rocket', './assets/rocket.png');
 		this.load.image('p2rocket', './assets/p2rocket.png');
 		this.load.image('spaceship', './assets/spaceship.png');
+		this.load.image('forest', './assets/forests.png');
+		this.load.image('mounts', './assets/mounts.png');
+		this.load.image('clouds', './assets/cloud.png');
 		this.load.image('starfield', './assets/starfield.png');
 		this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9})
 	}
@@ -19,6 +22,10 @@ class Play extends Phaser.Scene {
 		
 		// place tile sprite
 		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
+		this.clouds = this.add.tileSprite(0, 0, 640, 480, 'clouds').setOrigin(0, 0);
+		this.mounts = this.add.tileSprite(0, 0, 640, 480, 'mounts').setOrigin(0, 0);
+		this.forest = this.add.tileSprite(0, 0, 640, 480, 'forest').setOrigin(0, 0);
+		
 		// add rocket (p1)
 		this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
 		// add rocket (p2) if in 2P mode
@@ -81,7 +88,7 @@ class Play extends Phaser.Scene {
 		this.p2Score = 0;
 		
 		// initialize scrolling speed
-		this.scrollSpeed = 5;
+		this.scrollSpeed = 2;
 		
 		// display score
 		let scoreConfig = {
@@ -177,10 +184,13 @@ class Play extends Phaser.Scene {
 		
 		if(this.timePassed >= this.speedAfter & !this.speedUp) {
 			this.speedUp = true;
-			this.scrollSpeed = 10;
+			this.scrollSpeed = 5;
 		}
 		
 		this.starfield.tilePositionX -= this.scrollSpeed;
+		this.clouds.tilePositionX -= (this.scrollSpeed + 2);
+		this.mounts.tilePositionX -= (this.scrollSpeed + 4);
+		this.forest.tilePositionX -= (this.scrollSpeed + 5);
 			
 		if (!this.gameOver && !this.pause) {
 			this.p1Rocket.update();
