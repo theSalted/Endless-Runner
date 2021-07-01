@@ -2,6 +2,7 @@ class Play extends Phaser.Scene {
 	constructor() {
 		super("playScene")
 	}
+	// preload
 	preload() {
 		// load images/tile sprites
 		this.load.spritesheet('rainBall', './assets/rainbowBall.png', {frameWidth: 16, frameHeight: 8, startFrame: 0, endFrame: 2})
