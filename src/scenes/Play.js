@@ -4,8 +4,8 @@ class Play extends Phaser.Scene {
 	}
 	preload() {
 		// load images/tile sprites
-		this.load.image('rocket', './assets/rocket.png');
-		this.load.image('p2rocket', './assets/p2rocket.png');
+		this.load.spritesheet('rainBall', './assets/rainbowBall.png', {frameWidth: 16, frameHeight: 8, startFrame: 0, endFrame: 2})
+		this.load.spritesheet('bwBall', './assets/bwBall.png', {frameWidth: 16, frameHeight: 8, startFrame: 0, endFrame: 2})
 		this.load.image('spaceship', './assets/bearcan.png');
 		this.load.image('forest', './assets/forests.png');
 		this.load.image('mounts', './assets/mounts.png');
@@ -35,6 +35,20 @@ class Play extends Phaser.Scene {
 			repeat: -1
 		});
 		
+		this.anims.create({
+			key: 'rainbow',
+			frames: this.anims.generateFrameNumbers('rainBall', { start:0, end: 2, first: 0}),
+			frameRate: 3,
+			repeat: -1
+		});
+		
+		this.anims.create({
+			key: 'blacknwhite',
+			frames: this.anims.generateFrameNumbers('bwBall', { start:0, end: 2, first: 0}),
+			frameRate: 3,
+			repeat: -1
+		});
+		
 		// place tile sprite
 		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
 		this.clouds = this.add.tileSprite(0, 0, 640, 480, 'clouds').setOrigin(0, 0);
@@ -42,11 +56,13 @@ class Play extends Phaser.Scene {
 		this.forest = this.add.tileSprite(0, 0, 640, 480, 'forest').setOrigin(0, 0);
 		
 		// add rocket (p1)
-		this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
+		this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rainBall').setOrigin(0.5, 0);
 		// add rocket (p2) if in 2P mode
 		if(game.settings.is2P) {
-			this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'p2rocket').setOrigin(0.5, 0);
+			this.p2Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'bwBall').setOrigin(0.5, 0);
+			this.p2Rocket.play('blacknwhite');
 		}
+		this.p1Rocket.play('rainbow');
 		
 		// add random spaceships
 		this.speed = game.settings.spaceshipSpeed;
