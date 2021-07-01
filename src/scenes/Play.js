@@ -6,12 +6,13 @@ class Play extends Phaser.Scene {
 		// load images/tile sprites
 		this.load.image('rocket', './assets/rocket.png');
 		this.load.image('p2rocket', './assets/p2rocket.png');
-		this.load.image('spaceship', './assets/spaceship.png');
+		this.load.image('spaceship', './assets/bearcan.png');
 		this.load.image('forest', './assets/forests.png');
 		this.load.image('mounts', './assets/mounts.png');
 		this.load.image('clouds', './assets/cloud.png');
 		this.load.image('starfield', './assets/starfield.png');
 		this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9})
+		this.load.spritesheet('rollingBear', './assets/bearsheet.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 4})
 	}
 	create() {
 		
@@ -19,6 +20,20 @@ class Play extends Phaser.Scene {
 			console.log("RP: endranceMode and is 2P can't enable at same time (endranceMode has setten to false)");
 			game.settings.endranceMode = false;
 		}
+		
+		// animation config
+		this.anims.create({
+			key: 'explode',
+			frames: this.anims.generateFrameNumbers('explosion', { start:0, end: 9, first: 0}),
+			frameRate: 30
+		});
+		
+		this.anims.create({
+			key: 'rolling',
+			frames: this.anims.generateFrameNumbers('rollingBear', { start:0, end: 4, first: 0}),
+			frameRate: 5,
+			repeat: -1
+		});
 		
 		// place tile sprite
 		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
@@ -37,25 +52,29 @@ class Play extends Phaser.Scene {
 		this.speed = game.settings.spaceshipSpeed;
 		this.speedUpSpeed = game.settings.speedUpSpeed;
 		if(Math.random() < 0.5) {
-			this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize * 4, 'spaceship', 0, 30, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
+			this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize * 4, 'rollingBear', 0, 30, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
 		} else {
-			this.ship01 = new Spaceship(this, -borderUISize*6, borderUISize * 4, 'spaceship', 0, 30, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
+			this.ship01 = new Spaceship(this, -borderUISize*6, borderUISize * 4, 'rollingBear', 0, 30, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
 			this.ship01.flipX = true
 		}
 		
 		if(Math.random() < 0.5) {
-			this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
+			this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize * 5 + borderPadding * 2, 'rollingBear', 0, 20, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
 		} else {
-			this.ship02 = new Spaceship(this, -borderUISize*3, borderUISize * 5 + borderPadding * 2, 'spaceship', 0, 20, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
+			this.ship02 = new Spaceship(this, -borderUISize*3, borderUISize * 5 + borderPadding * 2, 'rollingBear', 0, 20, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
 			this.ship02.flipX = true
 		}
 		
 		if(Math.random() < 0.5) {
-			this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding * 4, 'spaceship', 0, 10, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
+			this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding * 4, 'rollingBear', 0, 10, -this.speed, -this.speedUpSpeed).setOrigin(0, 0);
 		} else {
-			this.ship03 = new Spaceship(this, 0, borderUISize*6 + borderPadding * 4, 'spaceship', 0, 10, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
+			this.ship03 = new Spaceship(this, 0, borderUISize*6 + borderPadding * 4, 'rollingBear', 0, 10, this.speed, this.speedUpSpeed, true).setOrigin(0, 0);
 			this.ship03.flipX = true
 		}
+		// play ship animation
+		this.ship01.play('rolling');
+		this.ship02.play('rolling');
+		this.ship03.play('rolling');
 		
 		// green UI background
 		this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x37946e).setOrigin(0, 0);
@@ -76,12 +95,6 @@ class Play extends Phaser.Scene {
 		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 		keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 		
-		// animation config
-		this.anims.create({
-			key: 'explode',
-			frames: this.anims.generateFrameNumbers('explosion', { start:0, end: 9, first: 0}),
-			frameRate: 30
-		});
 		
 		// initialize score
 		this.p1Score = 0;
@@ -189,7 +202,7 @@ class Play extends Phaser.Scene {
 		
 		this.starfield.tilePositionX -= this.scrollSpeed;
 		this.clouds.tilePositionX -= (this.scrollSpeed + 2);
-		this.mounts.tilePositionX -= (this.scrollSpeed + 4);
+		this.mounts.tilePositionX -= (this.scrollSpeed + 3);
 		this.forest.tilePositionX -= (this.scrollSpeed + 5);
 			
 		if (!this.gameOver && !this.pause) {
