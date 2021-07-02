@@ -342,17 +342,16 @@ class Play extends Phaser.Scene {
 			game.highScore = this.p2Score;
 			this.isNewHighScore = true;
 		}
-		
 		if(game.highScore == 0) {
 			this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
 			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
 		} else if(this.isNewHighScore) {
 			this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER', scoreConfig).setOrigin(0.5);
-			this.add.text(game.config.width/2, game.config.height/2, 'High Score: ' + game.highScore, scoreConfig).setOrigin(0.5);
+			this.add.text(game.config.width/2, game.config.height/2, 'NEW High Score: ' + game.highScore, scoreConfig).setOrigin(0.5);
 			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
 		} else {
 			this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER', scoreConfig).setOrigin(0.5);
-			this.add.text(game.config.width/2, game.config.height/2, 'NEW High Score: ' + game.highScore, scoreConfig).setOrigin(0.5);
+			this.add.text(game.config.width/2, game.config.height/2, 'High Score: ' + game.highScore, scoreConfig).setOrigin(0.5);
 			this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
 		}
 		this.gameOver = true;

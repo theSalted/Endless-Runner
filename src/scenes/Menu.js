@@ -78,7 +78,9 @@ class Menu extends Phaser.Scene {
 		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 		
 		// initialize high score
-		game.highScore = 0;
+		if(game.highScore === undefined) {
+			game.highScore = 0;
+		}
 	}
 	update() {
 		
@@ -164,7 +166,7 @@ class Menu extends Phaser.Scene {
 			game.settings = {
 				spaceshipSpeed: 2.5,
 				speedUpSpeed: 3.5,
-				gameTimer: 3000,
+				gameTimer: 10000,
 				speedUpAfter: 6000,
 				timerAlwaysDisplay: true,
 				endranceMode: false,
