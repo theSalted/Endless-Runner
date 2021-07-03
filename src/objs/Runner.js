@@ -5,15 +5,16 @@ class Runner extends Phaser.GameObjects.Sprite {
 		
 		// initialize parameters
 		// jumpSpeed and acc is the fixed stats that manipulate runner's jumping physics 
-		// currentSpeed is the runtime runner's speed
+		// speed is the runtime runner's speed
 		// and g stands for gravitational acceleration
 		this.isJumping = false
+		this.isFalling = false
 		this.yOrigin = 350;
 		this.initSpeed = 7;
-		this.initAcceleration = 0.2;
-		this.currentSpeed = this.initSpeed;
-		this.currentAcc = this.initAcceleration;
-		this.g = 0.0001;
+		this.gravitationalAcc = 0.2;
+		this.speed = this.initSpeed;
+		this.acceleration = this.gravitationalAcc;
+		this.jerk = 0.005;
 	}
 	update() {
 		if(!this.isJumping) {
@@ -22,20 +23,38 @@ class Runner extends Phaser.GameObjects.Sprite {
 			}
 		}
 		this.jump();
+		this.fall();
 	}
 	jump() {
-		if(this.isJumping){
-			this.currentAcc += this.g;
-			this.currentSpeed -= this.currentAcc;
-			this.y -= this.currentSpeed;
+		if(this.isJumping && !this.isFalling){
+			this.acceleration += this.jerk;
+			this.speed -= this.acceleration;
+			this.y -= this.speed;
 			
 			// reset upon complete jump
 			if(this.y >= this.yOrigin) {
 				this.y = this.yOrigin
-				this.currentSpeed = this.initSpeed;
-				this.currentAcc = this.initAcceleration;
+				this.speed = this.initSpeed;
+				this.acceleration = this.gravitationalAcc;
 				this.isJumping = false;
 			}
 		}
+	}
+	fall() {
+		if(this.isFalling){
+			this.isJumping = false;
+			this.speed += this.gravitationalAcc;
+			this.y += this.initSpeed;
+			
+			if(this.y >= this.yOrigin) {
+				this.y = this.yOrigin
+				this.speed = this.initSpeed;
+				this.acceleration = this.gravitationalAcc;
+				this.isFalling = false;
+			}
+		}
+	}
+	print() {
+		console.log('yes')
 	}
 }
