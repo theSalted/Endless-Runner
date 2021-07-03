@@ -9,10 +9,11 @@ class Runner extends Phaser.GameObjects.Sprite {
 		// and g stands for gravitational acceleration
 		this.isJumping = false
 		this.yOrigin = 350;
-		this.jumpSpeed = 5;
-		this.currentSpeed = this.jumpSpeed;
-		this.acceleration = 0.1;
-		this.g = 3;
+		this.initSpeed = 7;
+		this.initAcceleration = 0.2;
+		this.currentSpeed = this.initSpeed;
+		this.currentAcc = this.initAcceleration;
+		this.g = 0.0001;
 	}
 	update() {
 		if(!this.isJumping) {
@@ -24,12 +25,15 @@ class Runner extends Phaser.GameObjects.Sprite {
 	}
 	jump() {
 		if(this.isJumping){
-			this.currentSpeed -= this.acceleration;
+			this.currentAcc += this.g;
+			this.currentSpeed -= this.currentAcc;
 			this.y -= this.currentSpeed;
 			
+			// reset upon complete jump
 			if(this.y >= this.yOrigin) {
 				this.y = this.yOrigin
-				this.currentSpeed = this.jumpSpeed;
+				this.currentSpeed = this.initSpeed;
+				this.currentAcc = this.initAcceleration;
 				this.isJumping = false;
 			}
 		}

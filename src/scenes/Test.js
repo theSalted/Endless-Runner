@@ -36,7 +36,6 @@ class Test extends Phaser.Scene {
 		// play rolling animation
 		this.runner.play('rolling');
 		
-		
 
 	}
 	update() {
