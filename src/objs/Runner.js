@@ -7,8 +7,9 @@ class Runner extends Phaser.GameObjects.Sprite {
 		// jumpSpeed and acc is the fixed stats that manipulate runner's jumping physics 
 		// speed is the runtime runner's speed
 		// and g stands for gravitational acceleration
-		this.isJumping = false
-		this.isFalling = false
+		this.isJumping = false;
+		this.isFalling = false;
+		this.isAccelerating = false;
 		this.yOrigin = 350;
 		this.initSpeed = 7;
 		this.gravitationalAcc = 0.2;
@@ -22,6 +23,12 @@ class Runner extends Phaser.GameObjects.Sprite {
 				this.isJumping = true;
 			}
 		}
+		/*if (!this.isAccelerating) {
+			if (keyRIGHT.isDown) {
+				this.isAccelerating = true;
+			}
+		}
+		this.accelerate();*/
 		this.jump();
 		this.fall();
 	}
@@ -54,6 +61,15 @@ class Runner extends Phaser.GameObjects.Sprite {
 			}
 		}
 	}
+
+
+	//acceleration
+	/*accelerate() {
+		if (this.isAccelerating) {
+			this.initSpeed *= 2;
+		}
+	}
+*/
 	print() {
 		console.log('yes')
 	}
