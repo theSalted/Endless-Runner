@@ -9,7 +9,7 @@ class Mount extends Phaser.Scene {
 		this.load.image('cloud', './assets/mount/cloud.png');
 		this.load.image('mount', './assets/mount/mountains.png');
 		this.load.image('forest', './assets/mount/forest.png');
-		this.load.image('block', './assets/mount/block.png')
+		this.load.image('block', './assets/block.png')
 		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
 	}
 	create() {
