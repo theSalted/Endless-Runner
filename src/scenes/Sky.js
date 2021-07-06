@@ -45,7 +45,9 @@ class Sky extends Phaser.Scene {
 		this.runner.play('rolling');
 	
 		// create block
-		this.block01 = new Block(this, game.config.width, 350, 'block').setOrigin(0, 0);
+		this.block01 = new Block(this, game.config.width, 400, 'block').setOrigin(0, 0);
+		this.block02 = new Block(this, game.config.width + 200, 240, 'block').setOrigin(0, 0);
+		this.block03 = new Block(this, game.config.width + 400 , 100, 'block').setOrigin(0, 0);
 		
 		// initialize health
 		this.health = 3;
@@ -98,7 +100,24 @@ class Sky extends Phaser.Scene {
 		if(this.block01.x <= -20) {
 			this.block01.reset();
 		}
+		if(this.block02.x <= -20) {
+			this.block02.reset();
+		}
+		if(this.block03.x <= -20) {
+			this.block03.reset();
+		}
+		
 		if(this.checkCollison(this.runner, this.block01) && !this.isInvicible) {
+			this.health -= 1;
+			this.healthDisplay.text = 'Health: ' + this.health;
+			this.isInvicible = true;
+		}
+		if(this.checkCollison(this.runner, this.block02) && !this.isInvicible) {
+			this.health -= 1;
+			this.healthDisplay.text = 'Health: ' + this.health;
+			this.isInvicible = true;
+		}
+		if(this.checkCollison(this.runner, this.block03) && !this.isInvicible) {
 			this.health -= 1;
 			this.healthDisplay.text = 'Health: ' + this.health;
 			this.isInvicible = true;
@@ -124,12 +143,14 @@ class Sky extends Phaser.Scene {
 			this.scene.start("menuScene");
 		}
 	
-		if(!this.checkCollison(this.runner, this.block01) && this.isInvicible) {
+		if(!(this.checkCollison(this.runner, this.block01) || this.checkCollison(this.runner, this.block02) || this.checkCollison(this.runner, this.block03)) && this.isInvicible) {
 			this.isInvicible = false;
 		}
 		
 		if(!this.gameOver) {
 			this.block01.update();
+			this.block02.update();
+			this.block03.update();
 			this.runner.update();
 		}
 
