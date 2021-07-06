@@ -40,7 +40,12 @@ class Menu extends Phaser.Scene {
 	}
 	update() {
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-			this.scene.start("mountScene");
+			
+			if(Math.random() < 0.5) {
+				this.scene.start("mountScene");
+			} else {
+				this.scene.start("skyScene");
+			}
 			//this.sound.get('sfx_background1').stop();
 		}
 	}
