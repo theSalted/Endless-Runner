@@ -39,7 +39,7 @@ class Sky extends Phaser.Scene {
 		});
 		
 		// create runner object
-		this.runner = new Runner(this, 80, 350, 'runner').setOrigin(0, 0);
+		this.runner = new Flier(this, 80, 200, 'runner').setOrigin(0, 0);
 
 		// play rolling animation
 		this.runner.play('rolling');
@@ -95,23 +95,23 @@ class Sky extends Phaser.Scene {
 		this.mount.tilePositionX += (1.5);
 		this.cloud.tilePositionX += (5.5);	
 		
-		
 		if(this.block.x <= -20) {
 			this.block.reset();
 		}
-		
 		if(this.checkCollison(this.runner, this.block) && !this.isInvicible) {
 			this.health -= 1;
 			this.healthDisplay.text = 'Health: ' + this.health;
 			this.isInvicible = true;
 		}
 		
+		/*
 		if(this.health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
 			this.gameOver = true;
 			this.GOInstruction.setVisible(true);
 			this.GOPrompt.setVisible(true);
 		}
+		*/
 		
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
 			this.scene.start("skyScene");
