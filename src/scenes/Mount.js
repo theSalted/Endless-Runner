@@ -1,6 +1,6 @@
-class Play1 extends Phaser.Scene {
+class Mount extends Phaser.Scene {
 	constructor() {
-		super("playScene1")
+		super("mountScene")
 	}
 	// Preload
 	preload() {
@@ -13,12 +13,18 @@ class Play1 extends Phaser.Scene {
 		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
 	}
 	create() {
-		this.sound.play('sfx_background1'); 
+		this.backgroundMusic =  this.sound.add('sfx_background1', {
+			volume: 1,
+			loop: true
+		})
+		this.backgroundMusic.play()
 		// key mapping
 		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 		keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 		keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
 		keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+		keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+		keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 		
 		// create scenes
 		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
@@ -50,6 +56,9 @@ class Play1 extends Phaser.Scene {
 		this.health = 3;
 		this.isInvicible = false;
 		
+		// GAME OVER flag
+		this.gameOver = false;
+		
 		let textConfig = {
 			fontFamily: 'Impact',
 			fontSize: '28px',
@@ -58,6 +67,28 @@ class Play1 extends Phaser.Scene {
 		};
 		// create health display
 		this.healthDisplay = this.add.text(20, 20, 'Health: ' + this.health, textConfig);
+		
+		// style config for GAME OVER
+		let gameOverConfig = {
+			fontFamily: 'Impact',
+			fontSize: '28px',
+			backgroundColor: '#F3B141',
+			color: '#843605',
+			align: 'right',
+			padding: {
+				top: 5,
+				bottom: 5,
+			},
+			fixedWidth: 0
+		}
+		
+		// create game over prompts and hide them
+		this.GOPrompt = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 
+			'Game Over', gameOverConfig).setOrigin(0.5).setVisible(false);
+		gameOverConfig.backgroundColor = '#00FF00';
+		gameOverConfig.color = '#000';
+		this.GOInstruction = this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
+			'Press R to Restart or Q to Quit', gameOverConfig).setOrigin(0.5).setVisible(false);
 	}
 	update() {
 		// scene scrolling 
@@ -76,22 +107,28 @@ class Play1 extends Phaser.Scene {
 			this.isInvicible = true;
 		}
 		
-		/*if(this.health == 0 && !this.isInvicible && !this.runner.isFalling) {
-			this.sound.get('sfx_background1').destroy();
-			this.scene.start("gameOver");
-		}*/
-
-		if(this.health == 0) {
-			this.sound.get('sfx_background1').destroy();
-			this.scene.start("gameOver");
+		if(this.health == 0 && !this.gameOver) {
+			this.backgroundMusic.pause();
+			this.gameOver = true;
+			this.GOInstruction.setVisible(true);
+			this.GOPrompt.setVisible(true);
 		}
-			
+		
+		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
+			this.scene.start("mountScene");
+		   }
+		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {
+			this.scene.start("menuScene");
+		}
+	
 		if(!this.checkCollison(this.runner, this.block) && this.isInvicible) {
 			this.isInvicible = false;
 		}
 		
-		this.block.update();
-		this.runner.update();
+		if(!this.gameOver) {
+			this.block.update();
+			this.runner.update();
+		}
 
 	}
 	checkCollison(runner, block) {

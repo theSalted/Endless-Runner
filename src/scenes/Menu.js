@@ -11,7 +11,7 @@ class Menu extends Phaser.Scene {
 	create() {
 		console.log('Menu Loaded')
 		let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Impact',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -40,7 +40,7 @@ class Menu extends Phaser.Scene {
 	}
 	update() {
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-			this.scene.start("skyScene");
+			this.scene.start("mountScene");
 			//this.sound.get('sfx_background1').stop();
 		}
 	}

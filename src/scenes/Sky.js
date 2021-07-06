@@ -66,7 +66,7 @@ class Sky extends Phaser.Scene {
 		
 		// style config for GAME OVER
 		let gameOverConfig = {
-			fontFamily: 'Courier',
+			fontFamily: 'Impact',
 			fontSize: '28px',
 			backgroundColor: '#F3B141',
 			color: '#843605',
