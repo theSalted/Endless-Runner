@@ -3,7 +3,7 @@ class Menu extends Phaser.Scene {
 		super("menuScene");
 	}
 	preload() {
-		this.load.audio('sfx_background1', './assets/ground_song.wav');
+		this.load.audio('sfx_mount', './assets/mount/mount_song.wav');
 		this.load.audio('sfx_background2', './assets/ocean_song.wav');
 		this.load.audio('sfx_background_sky', './assets/sky/sky_song.wav');
 		this.load.audio('sfx_hit', './assets/hit.wav');
