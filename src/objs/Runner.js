@@ -23,15 +23,10 @@ class Runner extends Phaser.GameObjects.Sprite {
 				this.isJumping = true;
 			}
 		}
-		/*if (!this.isAccelerating) {
-			if (keyRIGHT.isDown) {
-				this.isAccelerating = true;
-			}
-		}
-		this.accelerate();*/
 		this.jump();
 		this.fall();
 	}
+
 	jump() {
 		if(this.isJumping && !this.isFalling){
 			this.acceleration += this.jerk;
@@ -47,6 +42,7 @@ class Runner extends Phaser.GameObjects.Sprite {
 			}
 		}
 	}
+
 	fall() {
 		if(this.isFalling){
 			this.isJumping = false;
@@ -62,14 +58,6 @@ class Runner extends Phaser.GameObjects.Sprite {
 		}
 	}
 
-
-	//acceleration
-	/*accelerate() {
-		if (this.isAccelerating) {
-			this.initSpeed *= 2;
-		}
-	}
-*/
 	print() {
 		console.log('yes')
 	}
