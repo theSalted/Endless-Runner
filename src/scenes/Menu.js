@@ -5,10 +5,11 @@ class Menu extends Phaser.Scene {
 	preload() {
 		this.load.audio('sfx_background1', './assets/ground_song.wav');
 		this.load.audio('sfx_background2', './assets/ocean_song.wav');
-		this.load.audio('sfx_background3', './assets/sky_song.wav');
+		this.load.audio('sfx_background_sky', './assets/sky/sky_song.wav');
 		this.load.audio('sfx_hit', './assets/hit.wav');
 	}
 	create() {
+		console.log('Menu Loaded')
 		let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -39,7 +40,7 @@ class Menu extends Phaser.Scene {
 	}
 	update() {
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-			this.scene.start("playScene1");
+			this.scene.start("skyScene");
 			//this.sound.get('sfx_background1').stop();
 		}
 	}
