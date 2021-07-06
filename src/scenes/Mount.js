@@ -5,10 +5,10 @@ class Mount extends Phaser.Scene {
 	// Preload
 	preload() {
 		// load images
-		this.load.image('starfield', './assets/mount/purplestarfield.png');
-		this.load.image('cloud', './assets/mount/cloud.png');
-		this.load.image('mount', './assets/mount/mountains.png');
-		this.load.image('forest', './assets/mount/forest.png');
+		this.load.image('starfield_mount', './assets/mount/purplestarfield.png');
+		this.load.image('cloud_mount', './assets/mount/cloud.png');
+		this.load.image('mount_mount', './assets/mount/mountains.png');
+		this.load.image('forest_mount', './assets/mount/forest.png');
 		this.load.image('block', './assets/block.png')
 		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
 	}
@@ -27,10 +27,10 @@ class Mount extends Phaser.Scene {
 		keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 		
 		// create scenes
-		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
-		this.cloud = this.add.tileSprite(0, 0, 640, 480, 'cloud').setOrigin(0, 0);
-		this.mount = this.add.tileSprite(0, 0, 640, 480, 'mount').setOrigin(0, 0);
-		this.forest = this.add.tileSprite(0, 0, 640, 480, 'forest').setOrigin(0, 0);
+		this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield_mount').setOrigin(0, 0);
+		this.cloud = this.add.tileSprite(0, 0, 640, 480, 'cloud_mount').setOrigin(0, 0);
+		this.mount = this.add.tileSprite(0, 0, 640, 480, 'mount_mount').setOrigin(0, 0);
+		this.forest = this.add.tileSprite(0, 0, 640, 480, 'forest_mount').setOrigin(0, 0);
 		
 		// create rolling animation for runner
 		this.anims.create({

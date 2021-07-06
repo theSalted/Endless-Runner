@@ -5,11 +5,11 @@ class Sky extends Phaser.Scene {
 	// Preload
 	preload() {
 		// load images
-		this.load.image('sky', './assets/sky/sky.png');
-		this.load.image('stars', './assets/sky/stars.png');
-		this.load.image('moon', './assets/sky/moon.png');
-		this.load.image('mount', './assets/sky/mount.png');
-		this.load.image('cloud', './assets/sky/cloud.png');
+		this.load.image('sky_sky', './assets/sky/sky.png');
+		this.load.image('star_sky', './assets/sky/stars.png');
+		this.load.image('moon_sky', './assets/sky/moon.png');
+		this.load.image('mount_sky', './assets/sky/mount.png');
+		this.load.image('cloud_sky', './assets/sky/cloud.png');
 		this.load.image('block', './assets/block.png')
 		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
 	}
@@ -175,11 +175,11 @@ class Sky extends Phaser.Scene {
 	}
 	createScene() {
 		// create scenes
-		this.sky = this.add.tileSprite(0, 0, 640, 480, 'sky').setOrigin(0, 0);
-		this.stars = this.add.tileSprite(0, 0, 640, 480, 'stars').setOrigin(0, 0);
-		this.moon = this.add.tileSprite(0, 0, 640, 480, 'moon').setOrigin(0, 0);
-		this.mount = this.add.tileSprite(0, 0, 640, 480, 'mount').setOrigin(0, 0);
-		this.cloud = this.add.tileSprite(0, 0, 640, 480, 'cloud').setOrigin(0, 0);
+		this.sky = this.add.tileSprite(0, 0, 640, 480, 'sky_sky').setOrigin(0, 0);
+		this.stars = this.add.tileSprite(0, 0, 640, 480, 'star_sky').setOrigin(0, 0);
+		this.moon = this.add.tileSprite(0, 0, 640, 480, 'moon_sky').setOrigin(0, 0);
+		this.mount = this.add.tileSprite(0, 0, 640, 480, 'mount_sky').setOrigin(0, 0);
+		this.cloud = this.add.tileSprite(0, 0, 640, 480, 'cloud_sky').setOrigin(0, 0);
 	}
 }
 
