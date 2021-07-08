@@ -1,9 +1,10 @@
 /*
 Title: Dimension Dash
 Date: 07/08/2021 - we decided to take extra time in order to polish our game
-Collaborators: 	 Yanyao Hu
-			     Yuhao Chen
-                 Izat Temiraliev
+Collaborators: 	 
+ Yanyao Hu
+ Yuhao Chen
+ Izat Temiraliev
 
 Creative tilt justification:
 1) We think that the most interesting part of our game is that a main character can
