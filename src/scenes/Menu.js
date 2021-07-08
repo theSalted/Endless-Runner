@@ -32,6 +32,9 @@ class Menu extends Phaser.Scene {
         menuConfig.color = '#000';
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
 			'Press RIGHT to Start', menuConfig).setOrigin(0.5);
+			
+		this.random = Math.floor(Math.random() * 3);;
+		console.log(this.random);
 
 		// key mapping
 		keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -41,15 +44,13 @@ class Menu extends Phaser.Scene {
 	}
 	update() {
 		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-			
-			this.scene.start("oceanScene")
-			/*
-			if(Math.random() < 0.5) {
+			if(this.random == 0) {
 				this.scene.start("mountScene");
-			} else {
+			} else if (this.random <= 1) {
 				this.scene.start("skyScene");
+			} else {
+				this.scene.start("oceanScene");
 			}
-			*/
 			//this.sound.get('sfx_background1').stop();
 		}
 	}

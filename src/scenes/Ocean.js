@@ -46,7 +46,7 @@ class Ocean extends Phaser.Scene {
 		});
 		
 		// create runner object
-		this.runner = new Flier(this, 80, 200, 'runner').setOrigin(0, 0);
+		this.runner = new Swimmer(this, 80, 350, 'runner').setOrigin(0, 0);
 
 		// play rolling animation
 		this.runner.play('rolling');
@@ -168,13 +168,7 @@ class Ocean extends Phaser.Scene {
 			var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
 			this.scene.start(sceneRandomize);
 		}
-		
-		if(this.checkBondaries(this.runner)) {
-			health -= 1;
-			this.runner.y = 200;
-			this.healthDisplay.text = 'Health: ' + health;
-		}
-		
+		/*
 		if(health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
 			health = 3;
@@ -183,7 +177,7 @@ class Ocean extends Phaser.Scene {
 			this.GOInstruction.setVisible(true);
 			this.GOPrompt.setVisible(true);
 		}
-		
+		*/
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
 			var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
 			this.scene.start(sceneRandomize);
@@ -210,13 +204,6 @@ class Ocean extends Phaser.Scene {
 			runner.x + runner.width > block.x && 
 			runner.y < block.y + block.height &&
 			runner.height + runner.y > block.y) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	checkBondaries(runner) {
-		if(runner.y > 480) {
 			return true;
 		} else {
 			return false;

@@ -11,9 +11,9 @@ class Swimmer extends Phaser.GameObjects.Sprite {
 		this.isFalling = false;
 		this.isAccelerating = false;
 		this.yOrigin = 350;
-		this.initSpeed = 7;
-		this.gravitationalAcc = 0.2;
-		this.speed = -5;
+		this.initSpeed = 5;
+		this.gravitationalAcc = 0.1;
+		this.speed = 0;
 		this.acceleration = 0;
 		this.jerk = 0.005;
 	}
@@ -23,39 +23,18 @@ class Swimmer extends Phaser.GameObjects.Sprite {
 		}
 		
 		if(this.y < 0) {
-			this.speed = -5;
+			this.speed = -3;
 		}
 		
 		this.y -= this.speed;
 		
-		
-		if(this.speed > -5) {
+		if(this.speed > -3 & this.y < this.yOrigin) {
 			this.speed -= this.gravitationalAcc;
 		}
-	}
-
-	jump() {
-		if(this.isJumping && !this.isFalling){
-			this.speed = this.initSpeed;
+		
+		if(this.y >= this.yOrigin) {
+			console.log('hit ground');
+			this.speed = 0;
 		}
-	}
-
-	fall() {
-		if(this.isFalling){
-			this.isJumping = false;
-			this.speed += this.gravitationalAcc;
-			this.y += this.initSpeed;
-			
-			if(this.y >= this.yOrigin) {
-				this.y = this.yOrigin
-				this.speed = this.initSpeed;
-				this.acceleration = this.gravitationalAcc;
-				this.isFalling = false;
-			}
-		}
-	}
-
-	print() {
-		console.log('yes')
 	}
 }
