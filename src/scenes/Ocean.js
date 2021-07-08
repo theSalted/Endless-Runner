@@ -17,6 +17,8 @@ class Ocean extends Phaser.Scene {
 	}
 	create() {
 		this.createScene();
+		
+		
 	}
 	update() {
 		this.background.tilePositionX += 0.3
@@ -24,15 +26,21 @@ class Ocean extends Phaser.Scene {
 		this.vfarSeabed.tilePositionX += 0.8
 		this.farSeabed.tilePositionX += 1.1
 		this.mainSeabed.tilePositionX += 1.5
-		this.coralSeabed.tilePositionX += 2.0
+		this.coralSeabed.tilePositionX += 2.2
+		this.fish1.tilePositionX += 3.1
+		this.fish2.tilePositionX -= 1.1
+		this.fish3.tilePositionX -= 1.4
 	}
 	createScene() {
 		// create scenes
 		this.background = this.add.tileSprite(0, 0, 640, 480, 'background_ocean').setOrigin(0, 0);
 		this.vvfarSeabed = this.add.tileSprite(0, 0, 640, 480, 'seabed_vvfar_ocean').setOrigin(0, 0);
+		this.fish1 = this.add.tileSprite(0, 0, 640, 480, 'fish1').setOrigin(0, 0);
 		this.vfarSeabed = this.add.tileSprite(0, 0, 640, 480, 'seabed_vfar_ocean').setOrigin(0, 0);
+		this.fish2 = this.add.tileSprite(0, 0, 640, 480, 'fish2').setOrigin(0, 0);
 		this.farSeabed = this.add.tileSprite(0, 0, 640, 480, 'seabed_far_ocean').setOrigin(0, 0);
 		this.mainSeabed = this.add.tileSprite(0, 0, 640, 480, 'seabed_main_ocean').setOrigin(0, 0);
+		this.fish3 = this.add.tileSprite(0, 0, 640, 480, 'fish3').setOrigin(0, 0);
 		this.coralSeabed = this.add.tileSprite(0, 0, 640, 480, 'seabed_coral_ocean').setOrigin(0, 0);
 	}
 }
