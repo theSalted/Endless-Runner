@@ -168,7 +168,7 @@ class Ocean extends Phaser.Scene {
 			var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
 			this.scene.start(sceneRandomize);
 		}
-		/*
+
 		if(health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
 			health = 3;
@@ -177,7 +177,6 @@ class Ocean extends Phaser.Scene {
 			this.GOInstruction.setVisible(true);
 			this.GOPrompt.setVisible(true);
 		}
-		*/
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
 			var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
 			this.scene.start(sceneRandomize);
