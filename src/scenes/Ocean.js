@@ -59,9 +59,9 @@ class Ocean extends Phaser.Scene {
 		this.swimmer.play('swimming');
 	
 		// create block
-		this.block01 = new Block(this, game.config.width + 100, 20, 'jellyFish').setOrigin(0, 0);
-		this.block02 = new Block(this, game.config.width + 350, 170, 'jellyFish').setOrigin(0, 0);
-		this.block03 = new Block(this, game.config.width + 600, 350, 'jellyFish').setOrigin(0, 0);
+		this.block01 = new Block(this, game.config.width + 100, 20, 'jellyFish', 5).setOrigin(0, 0);
+		this.block02 = new Block(this, game.config.width + 350, 170, 'jellyFish', 5).setOrigin(0, 0);
+		this.block03 = new Block(this, game.config.width + 600, 350, 'jellyFish', 5).setOrigin(0, 0);
 		
 		this.block01.play('jellyRainbowing');
 		this.block02.play('jellyRainbowing');
@@ -121,7 +121,9 @@ class Ocean extends Phaser.Scene {
 		gameOverConfig.color = '#000';
 		this.GOInstruction = this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
 			'Press R to Restart or Q to Quit', gameOverConfig).setOrigin(0.5).setVisible(false);
-			
+		
+		// store the initial score
+		this.initScore = p1Score;
 	}
 	update() {
 		this.background.tilePositionX += 0.3
@@ -205,8 +207,10 @@ class Ocean extends Phaser.Scene {
 			this.block01.update();
 			this.block02.update();
 			this.block03.update();
-			this.teleport.update();
 			this.swimmer.update();
+		}
+		if(!this.gameOver && p1Score - this.initScore >= 400) {
+			this.teleport.update();
 		}
 	}
 	checkCollison(runner, block) {

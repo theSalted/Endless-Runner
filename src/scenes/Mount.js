@@ -62,7 +62,7 @@ class Mount extends Phaser.Scene {
 		this.runner.play('driving');
 		
 		// create block
-		this.block = new Block(this, game.config.width, 350, 'block').setOrigin(0, 0);
+		this.block = new Block(this, game.config.width, 350, 'block', 10).setOrigin(0, 0);
 
 		//create teleport
 		this.teleport = new Teleport(this, game.config.width + 300, 240, 'teleport').setOrigin(0, 0);
@@ -106,6 +106,9 @@ class Mount extends Phaser.Scene {
 		gameOverConfig.color = '#000';
 		this.GOInstruction = this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
 			'Press R to Restart or Q to Quit', gameOverConfig).setOrigin(0.5).setVisible(false);
+		
+		// store the initial score
+		this.initScore = p1Score;
 	}
 	update() {
 		// scene scrolling 
@@ -163,9 +166,11 @@ class Mount extends Phaser.Scene {
 		}
 
 		if(!this.gameOver) {
-			this.teleport.update();
 			this.block.update();
 			this.runner.update();
+		}
+		if(!this.gameOver && p1Score - this.initScore >= 200) {
+			this.teleport.update();
 		}
 
 	}
