@@ -9,7 +9,8 @@ class Mount extends Phaser.Scene {
 		this.load.image('cloud_mount', './assets/mount/cloud.png');
 		this.load.image('mount_mount', './assets/mount/mountains.png');
 		this.load.image('forest_mount', './assets/mount/forest.png');
-		this.load.image('block', './assets/block.png')
+		this.load.image('block', './assets/block.png');
+		this.load.image('teleport', './assets/teleport.png');
 		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
 	}
 	create() {
@@ -48,6 +49,9 @@ class Mount extends Phaser.Scene {
 		
 		// create block
 		this.block = new Block(this, game.config.width, 350, 'block').setOrigin(0, 0);
+
+		//create teleport
+		this.teleport = new Teleport(this, game.config.width + 300, 240, 'teleport').setOrigin(0, 0);
 		
 		// gameover condition initialize 
 		this.isGameOver = false;
@@ -100,6 +104,10 @@ class Mount extends Phaser.Scene {
 		if(this.block.x <= -20) {
 			this.block.reset();
 		}
+
+		if(this.teleport.x <= -20) {
+			this.teleport.reset();
+		}
 		
 		if(this.checkCollison(this.runner, this.block) && !this.isInvicible) {
 			this.health -= 1;
@@ -107,6 +115,13 @@ class Mount extends Phaser.Scene {
 			this.isInvicible = true;
 		}
 		
+		if(this.checkCollison(this.runner, this.teleport) && !this.isInvicible) {
+			this.sound.play('sfx_teleport');
+			this.isInvicible = true;
+			this.backgroundMusic.pause();
+			this.scene.start("skyScene");
+		}
+
 		if(this.health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
 			this.gameOver = true;
@@ -124,8 +139,9 @@ class Mount extends Phaser.Scene {
 		if(!this.checkCollison(this.runner, this.block) && this.isInvicible) {
 			this.isInvicible = false;
 		}
-		
+
 		if(!this.gameOver) {
+			this.teleport.update();
 			this.block.update();
 			this.runner.update();
 		}
