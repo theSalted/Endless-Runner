@@ -25,13 +25,13 @@ class Menu extends Phaser.Scene {
         }
         // show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 
-			'Endless Runner', menuConfig).setOrigin(0.5);
+			'Dimension Dash', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 
-			'SPACE - JUMP', menuConfig).setOrigin(0.5);
+			'SPACE = JUMP = SWIM = FLY', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
-			'Press RIGHT to Start', menuConfig).setOrigin(0.5);
+			'Press SPACE to Start', menuConfig).setOrigin(0.5);
 			
 		this.random = Math.floor(Math.random() * 3);;
 		console.log(this.random);
@@ -43,7 +43,7 @@ class Menu extends Phaser.Scene {
 		keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);		
 	}
 	update() {
-		if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
+		if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
 			if(this.random == 0) {
 				this.scene.start("mountScene");
 			} else if (this.random <= 1) {
