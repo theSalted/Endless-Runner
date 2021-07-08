@@ -128,6 +128,7 @@ class Mount extends Phaser.Scene {
 		}
 		
 		if(this.checkCollison(this.runner, this.block) && !this.isInvicible) {
+			this.sound.play('sfx_hit');
 			health -= 1;
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;

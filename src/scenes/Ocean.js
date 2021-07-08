@@ -153,6 +153,7 @@ class Ocean extends Phaser.Scene {
 		}
 
 		if(this.checkCollison(this.swimmer, this.block01) && !this.isInvicible) {
+			this.sound.play('sfx_hit');
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
@@ -160,6 +161,7 @@ class Ocean extends Phaser.Scene {
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.swimmer, this.block02) && !this.isInvicible) {
+			this.sound.play('sfx_hit');
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
@@ -167,6 +169,7 @@ class Ocean extends Phaser.Scene {
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.swimmer, this.block03) && !this.isInvicible) {
+			this.sound.play('sfx_hit');
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
