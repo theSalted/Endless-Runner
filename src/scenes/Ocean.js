@@ -17,6 +17,7 @@ class Ocean extends Phaser.Scene {
 		
 		this.load.image('teleport', './assets/teleport.png');
 		this.load.image('block', './assets/block.png')
+		this.load.spritesheet('jellyFish', './assets/ocean/jellyfish.png', {frameWidth: 36, frameHeight: 56, startFrame: 0, endFrame: 3})
 		this.load.spritesheet('swimmer', './assets/ocean/swimmingBear.png', {frameWidth: 70, frameHeight: 45, startFrame: 0, endFrame: 1})
 	}
 	create() {
@@ -44,6 +45,12 @@ class Ocean extends Phaser.Scene {
 			frameRate: 3,
 			repeat: -1
 		});
+		this.anims.create({
+			key: 'jellyRainbowing',
+			frames: this.anims.generateFrameNumbers('jellyFish', { start:0, end: 3, first: 0}),
+			frameRate: 5,
+			repeat: -1
+		});
 		
 		// create runner object
 		this.swimmer = new Swimmer(this, 80, 350, 'swimmer').setOrigin(0, 0);
@@ -52,9 +59,13 @@ class Ocean extends Phaser.Scene {
 		this.swimmer.play('swimming');
 	
 		// create block
-		this.block01 = new Block(this, game.config.width + 100, 20, 'block').setOrigin(0, 0);
-		this.block02 = new Block(this, game.config.width + 350, 170, 'block').setOrigin(0, 0);
-		this.block03 = new Block(this, game.config.width + 600, 350, 'block').setOrigin(0, 0);
+		this.block01 = new Block(this, game.config.width + 100, 20, 'jellyFish').setOrigin(0, 0);
+		this.block02 = new Block(this, game.config.width + 350, 170, 'jellyFish').setOrigin(0, 0);
+		this.block03 = new Block(this, game.config.width + 600, 350, 'jellyFish').setOrigin(0, 0);
+		
+		this.block01.play('jellyRainbowing');
+		this.block02.play('jellyRainbowing');
+		this.block03.play('jellyRainbowing');
 
 		//create teleport
 		this.teleport = new Teleport(this, game.config.width + 600, 300, 'teleport').setOrigin(0, 0);
