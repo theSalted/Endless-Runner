@@ -10,7 +10,8 @@ class Sky extends Phaser.Scene {
 		this.load.image('moon_sky', './assets/sky/moon.png');
 		this.load.image('mount_sky', './assets/sky/mount.png');
 		this.load.image('cloud_sky', './assets/sky/cloud.png');
-		this.load.image('block', './assets/block.png')
+		this.load.image('block', './assets/block.png');
+		this.load.image('teleport', './assets/teleport.png');
 		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
 	}
 	create() {
@@ -45,10 +46,14 @@ class Sky extends Phaser.Scene {
 		this.runner.play('rolling');
 	
 		// create block
-		this.block01 = new Block(this, game.config.width, 400, 'block').setOrigin(0, 0);
-		this.block02 = new Block(this, game.config.width + 200, 240, 'block').setOrigin(0, 0);
-		this.block03 = new Block(this, game.config.width + 400 , 100, 'block').setOrigin(0, 0);
-		
+		this.block01 = new Block(this, game.config.width + 200, 300, 'block').setOrigin(0, 0);
+		this.block02 = new Block(this, game.config.width + 400, 140, 'block').setOrigin(0, 0);
+		this.block03 = new Block(this, game.config.width + 600, 50, 'block').setOrigin(0, 0);
+
+
+		//create teleport
+		this.teleport = new Teleport(this, game.config.width + 600, 300, 'teleport').setOrigin(0, 0);
+
 		// initialize health
 		this.health = 3;
 		this.isInvicible = false;
@@ -107,6 +112,10 @@ class Sky extends Phaser.Scene {
 			this.block03.reset();
 		}
 		
+		if(this.teleport.x <= -20) {
+			this.teleport.reset();
+		}
+
 		if(this.checkCollison(this.runner, this.block01) && !this.isInvicible) {
 			this.health -= 1;
 			this.healthDisplay.text = 'Health: ' + this.health;
@@ -121,6 +130,13 @@ class Sky extends Phaser.Scene {
 			this.health -= 1;
 			this.healthDisplay.text = 'Health: ' + this.health;
 			this.isInvicible = true;
+		}
+
+		if(this.checkCollison(this.runner, this.teleport) && !this.isInvicible) {
+			this.sound.play('sfx_teleport');
+			this.isInvicible = true;
+			this.backgroundMusic.pause();
+			this.scene.start("mountScene");
 		}
 		
 		if(this.checkBondaries(this.runner)) {
@@ -151,6 +167,7 @@ class Sky extends Phaser.Scene {
 			this.block01.update();
 			this.block02.update();
 			this.block03.update();
+			this.teleport.update();
 			this.runner.update();
 		}
 

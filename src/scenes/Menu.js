@@ -7,6 +7,7 @@ class Menu extends Phaser.Scene {
 		this.load.audio('sfx_background2', './assets/ocean_song.wav');
 		this.load.audio('sfx_background_sky', './assets/sky/sky_song.wav');
 		this.load.audio('sfx_hit', './assets/hit.wav');
+		this.load.audio('sfx_teleport', './assets/teleport_sound.wav');
 	}
 	create() {
 		console.log('Menu Loaded')
