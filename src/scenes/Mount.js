@@ -40,7 +40,21 @@ class Mount extends Phaser.Scene {
 			frameRate: 5,
 			repeat: -1
 		});
-		
+
+        // display score
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, p1Score, scoreConfig);
 		// create runner object
 		this.runner = new Runner(this, 80, 350, 'runner').setOrigin(0, 0);
 
@@ -57,7 +71,6 @@ class Mount extends Phaser.Scene {
 		this.isGameOver = false;
 		
 		// initialize health
-		this.health = 3;
 		this.isInvicible = false;
 		
 		// GAME OVER flag
@@ -70,7 +83,7 @@ class Mount extends Phaser.Scene {
 			align: 'right'
 		};
 		// create health display
-		this.healthDisplay = this.add.text(20, 20, 'Health: ' + this.health, textConfig);
+		this.healthDisplay = this.add.text(20, 20, 'Health: ' + health, textConfig);
 		
 		// style config for GAME OVER
 		let gameOverConfig = {
@@ -85,7 +98,7 @@ class Mount extends Phaser.Scene {
 			},
 			fixedWidth: 0
 		}
-		
+
 		// create game over prompts and hide them
 		this.GOPrompt = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 
 			'Game Over', gameOverConfig).setOrigin(0.5).setVisible(false);
@@ -96,22 +109,26 @@ class Mount extends Phaser.Scene {
 	}
 	update() {
 		// scene scrolling 
-		this.starfield.tilePositionX += 1.5
+		this.starfield.tilePositionX += 1.5;
 		this.cloud.tilePositionX += (3.5);
 		this.mount.tilePositionX += (4.5);
 		this.forest.tilePositionX += (6.5);	
 		
 		if(this.block.x <= -20) {
 			this.block.reset();
+			p1Score += 10;
+			this.scoreLeft.text = p1Score;
 		}
 
-		if(this.teleport.x <= -20) {
+		if(this.teleport.x <= -80) {
 			this.teleport.reset();
 		}
 		
 		if(this.checkCollison(this.runner, this.block) && !this.isInvicible) {
-			this.health -= 1;
-			this.healthDisplay.text = 'Health: ' + this.health;
+			health -= 1;
+			p1Score -= 10;
+			this.scoreLeft.text = p1Score;
+			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		
@@ -119,19 +136,24 @@ class Mount extends Phaser.Scene {
 			this.sound.play('sfx_teleport');
 			this.isInvicible = true;
 			this.backgroundMusic.pause();
-			this.scene.start("skyScene");
+            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+			this.scene.start(sceneRandomize);
 		}
 
-		if(this.health == 0 && !this.gameOver) {
+		if(health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
+			health = 3;
+			p1Score = 0;
 			this.gameOver = true;
 			this.GOInstruction.setVisible(true);
 			this.GOPrompt.setVisible(true);
 		}
 		
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-			this.scene.start("mountScene");
-		   }
+            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+			this.scene.start(sceneRandomize);
+		}
+
 		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {
 			this.scene.start("menuScene");
 		}

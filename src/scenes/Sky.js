@@ -54,8 +54,6 @@ class Sky extends Phaser.Scene {
 		//create teleport
 		this.teleport = new Teleport(this, game.config.width + 600, 300, 'teleport').setOrigin(0, 0);
 
-		// initialize health
-		this.health = 3;
 		this.isInvicible = false;
 		
 		// GAME OVER flag
@@ -68,8 +66,23 @@ class Sky extends Phaser.Scene {
 			align: 'right'
 		};
 		
+        // display score
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, p1Score, scoreConfig);
+
 		// create health display
-		this.healthDisplay = this.add.text(20, 20, 'Health: ' + this.health, textConfig);
+		this.healthDisplay = this.add.text(20, 20, 'Health: ' + health, textConfig);
 		
 		// style config for GAME OVER
 		let gameOverConfig = {
@@ -110,25 +123,33 @@ class Sky extends Phaser.Scene {
 		}
 		if(this.block03.x <= -20) {
 			this.block03.reset();
+			p1Score += 100;
+			this.scoreLeft.text = p1Score;
 		}
 		
-		if(this.teleport.x <= -20) {
+		if(this.teleport.x <= -80) {
 			this.teleport.reset();
 		}
 
 		if(this.checkCollison(this.runner, this.block01) && !this.isInvicible) {
-			this.health -= 1;
-			this.healthDisplay.text = 'Health: ' + this.health;
+			p1Score -= 10;
+			this.scoreLeft.text = p1Score;
+			health -= 1;
+			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.runner, this.block02) && !this.isInvicible) {
-			this.health -= 1;
-			this.healthDisplay.text = 'Health: ' + this.health;
+			p1Score -= 10;
+			this.scoreLeft.text = p1Score;
+			health -= 1;
+			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.runner, this.block03) && !this.isInvicible) {
-			this.health -= 1;
-			this.healthDisplay.text = 'Health: ' + this.health;
+			p1Score -= 10;
+			this.scoreLeft.text = p1Score;
+			health -= 1;
+			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 
@@ -136,24 +157,28 @@ class Sky extends Phaser.Scene {
 			this.sound.play('sfx_teleport');
 			this.isInvicible = true;
 			this.backgroundMusic.pause();
-			this.scene.start("mountScene");
+            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+			this.scene.start(sceneRandomize);
 		}
 		
 		if(this.checkBondaries(this.runner)) {
-			this.health -= 1;
+			health -= 1;
 			this.runner.y = 200;
-			this.healthDisplay.text = 'Health: ' + this.health;
+			this.healthDisplay.text = 'Health: ' + health;
 		}
 		
-		if(this.health == 0 && !this.gameOver) {
+		if(health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
+			health = 3;
+			p1Score = 0;
 			this.gameOver = true;
 			this.GOInstruction.setVisible(true);
 			this.GOPrompt.setVisible(true);
 		}
 		
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-			this.scene.start("skyScene");
+            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+			this.scene.start(sceneRandomize);
 	   	}
 		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {
 			this.scene.start("menuScene");
