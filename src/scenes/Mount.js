@@ -13,6 +13,7 @@ class Mount extends Phaser.Scene {
 		this.load.image('teleport', './assets/teleport.png');
 		this.load.image('bamboo', './assets/bamboo.png')
 		this.load.image('bwbamboo', './assets/bwbamboo.png')
+		this.load.spritesheet('devilEye', './assets/mount/devilEye.png', {frameWidth: 42, frameHeight: 45, startFrame: 0, endFrame: 1})
 		this.load.spritesheet('runner', './assets/mount/drivingBear.png', {frameWidth: 54, frameHeight: 55, startFrame: 0, endFrame: 2})
 	}
 	create() {
@@ -42,6 +43,13 @@ class Mount extends Phaser.Scene {
 			frameRate: 5,
 			repeat: -1
 		});
+		
+		this.anims.create({
+			key: 'devilRainbowing',
+			frames: this.anims.generateFrameNumbers('devilEye', { start:0, end: 1, first: 0}),
+			frameRate: 2,
+			repeat: -1
+		});
 
         // display score
         let scoreConfig = {
@@ -59,7 +67,8 @@ class Mount extends Phaser.Scene {
 		this.runner.play('driving');
 		
 		// create block
-		this.block = new Block(this, game.config.width, 350, 'block', 10).setOrigin(0, 0);
+		this.block = new Block(this, game.config.width, 350, 'devilEye', 12).setOrigin(0, 0);
+		this.block.play('devilRainbowing');
 
 		//create teleport
 		this.teleport = new Teleport(this, game.config.width + 300, 240, 'teleport').setOrigin(0, 0);
