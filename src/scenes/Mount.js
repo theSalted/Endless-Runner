@@ -11,6 +11,8 @@ class Mount extends Phaser.Scene {
 		this.load.image('forest_mount', './assets/mount/forest.png');
 		this.load.image('block', './assets/block.png');
 		this.load.image('teleport', './assets/teleport.png');
+		this.load.image('bamboo', './assets/bamboo.png')
+		this.load.image('bwbamboo', './assets/bwbamboo.png')
 		this.load.spritesheet('runner', './assets/mount/drivingBear.png', {frameWidth: 54, frameHeight: 55, startFrame: 0, endFrame: 2})
 	}
 	create() {
@@ -43,18 +45,13 @@ class Mount extends Phaser.Scene {
 
         // display score
         let scoreConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            fontFamily: 'Impact',
+            fontSize: '40px',
+            color: '#FFFFFF',
             align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(500, 20, p1Score, scoreConfig);
 		// create runner object
 		this.runner = new Runner(this, 80, 350, 'runner').setOrigin(0, 0);
 
@@ -76,6 +73,7 @@ class Mount extends Phaser.Scene {
 		// GAME OVER flag
 		this.gameOver = false;
 		
+		/*
 		let textConfig = {
 			fontFamily: 'Impact',
 			fontSize: '28px',
@@ -83,14 +81,13 @@ class Mount extends Phaser.Scene {
 			align: 'right'
 		};
 		// create health display
-		this.healthDisplay = this.add.text(20, 20, 'Health: ' + health, textConfig);
-		
+		this.healthDisplay = this.add.text(50, 20, 'Health: ' + health, textConfig);
+		*/
 		// style config for GAME OVER
 		let gameOverConfig = {
 			fontFamily: 'Impact',
 			fontSize: '28px',
-			backgroundColor: '#F3B141',
-			color: '#843605',
+			color: '#FFFFFF',
 			align: 'right',
 			padding: {
 				top: 5,
@@ -102,13 +99,28 @@ class Mount extends Phaser.Scene {
 		// create game over prompts and hide them
 		this.GOPrompt = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 
 			'Game Over', gameOverConfig).setOrigin(0.5).setVisible(false);
-		gameOverConfig.backgroundColor = '#00FF00';
-		gameOverConfig.color = '#000';
 		this.GOInstruction = this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
-			'Press R to Restart or Q to Quit', gameOverConfig).setOrigin(0.5).setVisible(false);
+			'Press SPACE to go to Menu', gameOverConfig).setOrigin(0.5).setVisible(false);
 		
 		// store the initial score
 		this.initScore = p1Score;
+		
+		this.health01 = this.add.image(50, 45, 'bamboo');
+		this.health02 = this.add.image(80, 45, 'bamboo');
+		this.health03 = this.add.image(110, 45, 'bamboo');
+		
+		if (health < 1) {
+			this.health03 = this.add.image(50, 45, 'bwbamboo');
+		} 
+		
+		if (health < 2) {
+			this.health02 = this.add.image(80, 45, 'bwbamboo');
+		}
+		
+		if (health < 3) {
+			this.health01 = this.add.image(110, 45, 'bwbamboo');
+		}
+		
 	}
 	update() {
 		// scene scrolling 
@@ -132,7 +144,6 @@ class Mount extends Phaser.Scene {
 			health -= 1;
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
-			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		
@@ -143,7 +154,20 @@ class Mount extends Phaser.Scene {
             var sceneRandomize = sceneRand_ground[Math.floor(Math.random()*sceneRand_ground.length)];
 			this.scene.start(sceneRandomize);
 		}
+		
 
+		if (health < 1) {
+			this.health03 = this.add.image(50, 45, 'bwbamboo');
+		} 
+		
+		if (health < 2) {
+			this.health02 = this.add.image(80, 45, 'bwbamboo');
+		}
+		
+		if (health < 3) {
+			this.health01 = this.add.image(110, 45, 'bwbamboo');
+		}
+		
 		if(health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
 			health = 3;
@@ -152,13 +176,7 @@ class Mount extends Phaser.Scene {
 			this.GOInstruction.setVisible(true);
 			this.GOPrompt.setVisible(true);
 		}
-		
-		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-            var sceneRandomize = sceneRand_ground[Math.floor(Math.random()*sceneRand_ground.length)];
-			this.scene.start(sceneRandomize);
-		}
-
-		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {
+		if (Phaser.Input.Keyboard.JustDown(keySPACE) && this.gameOver) {
 			this.scene.start("menuScene");
 		}
 	

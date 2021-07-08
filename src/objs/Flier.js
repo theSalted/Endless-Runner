@@ -18,7 +18,7 @@ class Flier extends Phaser.GameObjects.Sprite {
 		this.jerk = 0.005;
 	}
 	update() {
-		if(keySPACE.isDown && this.speed <= 0){
+		if(keySPACE.isDown && this.speed <= 5){
 			this.speed = this.initSpeed;
 		}
 		

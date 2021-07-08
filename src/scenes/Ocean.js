@@ -19,6 +19,9 @@ class Ocean extends Phaser.Scene {
 		this.load.image('block', './assets/block.png')
 		this.load.spritesheet('jellyFish', './assets/ocean/jellyfish.png', {frameWidth: 36, frameHeight: 56, startFrame: 0, endFrame: 3})
 		this.load.spritesheet('swimmer', './assets/ocean/swimmingBear.png', {frameWidth: 70, frameHeight: 45, startFrame: 0, endFrame: 1})
+		
+		this.load.image('bamboo', './assets/bamboo.png')
+		this.load.image('bwbamboo', './assets/bwbamboo.png')
 	}
 	create() {
 		this.createScene();
@@ -75,37 +78,20 @@ class Ocean extends Phaser.Scene {
 		// GAME OVER flag
 		this.gameOver = false;
 		
-		let textConfig = {
-			fontFamily: 'Impact',
-			fontSize: '28px',
-			color: '#FFFFFF',
-			align: 'right'
-		};
-		
 		// display score
 		let scoreConfig = {
-			fontFamily: 'Courier',
-			fontSize: '28px',
-			backgroundColor: '#F3B141',
-			color: '#843605',
+			fontFamily: 'Impact',
+			fontSize: '40px',
+			color: '#FFFFFF',
 			align: 'right',
-			padding: {
-				top: 5,
-				bottom: 5,
-			},
 			fixedWidth: 100
 		}
-		this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, p1Score, scoreConfig);
-
-		// create health display
-		this.healthDisplay = this.add.text(20, 20, 'Health: ' + health, textConfig);
+		this.scoreLeft = this.add.text(500, 20, p1Score, scoreConfig);
 		
-		// style config for GAME OVER
 		let gameOverConfig = {
 			fontFamily: 'Impact',
 			fontSize: '28px',
-			backgroundColor: '#F3B141',
-			color: '#843605',
+			color: '#FFFFFF',
 			align: 'right',
 			padding: {
 				top: 5,
@@ -113,17 +99,32 @@ class Ocean extends Phaser.Scene {
 			},
 			fixedWidth: 0
 		}
-		
+
 		// create game over prompts and hide them
 		this.GOPrompt = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 
 			'Game Over', gameOverConfig).setOrigin(0.5).setVisible(false);
-		gameOverConfig.backgroundColor = '#00FF00';
-		gameOverConfig.color = '#000';
 		this.GOInstruction = this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
-			'Press R to Restart or Q to Quit', gameOverConfig).setOrigin(0.5).setVisible(false);
+			'Press SPACE to go to Menu', gameOverConfig).setOrigin(0.5).setVisible(false);
 		
 		// store the initial score
 		this.initScore = p1Score;
+		
+		this.health01 = this.add.image(50, 45, 'bamboo');
+		this.health02 = this.add.image(80, 45, 'bamboo');
+		this.health03 = this.add.image(110, 45, 'bamboo');
+		
+		if (health < 1) {
+			this.health03 = this.add.image(50, 45, 'bwbamboo');
+		} 
+		
+		if (health < 2) {
+			this.health02 = this.add.image(80, 45, 'bwbamboo');
+		}
+		
+		if (health < 3) {
+			this.health01 = this.add.image(110, 45, 'bwbamboo');
+		}
+		
 	}
 	update() {
 		this.background.tilePositionX += 0.3
@@ -157,7 +158,6 @@ class Ocean extends Phaser.Scene {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
-			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.swimmer, this.block02) && !this.isInvicible) {
@@ -165,7 +165,6 @@ class Ocean extends Phaser.Scene {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
-			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.swimmer, this.block03) && !this.isInvicible) {
@@ -173,7 +172,7 @@ class Ocean extends Phaser.Scene {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
-			this.healthDisplay.text = 'Health: ' + health;
+			//this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 
@@ -185,6 +184,19 @@ class Ocean extends Phaser.Scene {
 			this.scene.start(sceneRandomize);
 		}
 		
+		if (health < 1) {
+			this.health03 = this.add.image(50, 45, 'bwbamboo');
+		} 
+		
+		if (health < 2) {
+			this.health02 = this.add.image(80, 45, 'bwbamboo');
+		}
+		
+		if (health < 3) {
+			this.health01 = this.add.image(110, 45, 'bwbamboo');
+		}
+		
+		
 		if(health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
 			health = 3;
@@ -194,11 +206,7 @@ class Ocean extends Phaser.Scene {
 			this.GOPrompt.setVisible(true);
 		}
 		
-		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-			var sceneRandomize = sceneRand_ocean[Math.floor(Math.random()*sceneRand_ocean.length)];
-			this.scene.start(sceneRandomize);
-		   }
-		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {
+		if (Phaser.Input.Keyboard.JustDown(keySPACE) && this.gameOver) {
 			this.scene.start("menuScene");
 		}
 	

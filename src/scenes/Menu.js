@@ -33,7 +33,7 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
 			'Press SPACE to Start', menuConfig).setOrigin(0.5);
 			
-		this.random = Math.floor(Math.random() * 3);;
+		this.random = Math.floor(Math.random() * 3);
 		console.log(this.random);
 
 		// key mapping

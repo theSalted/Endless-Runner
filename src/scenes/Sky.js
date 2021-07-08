@@ -14,6 +14,9 @@ class Sky extends Phaser.Scene {
 		this.load.image('teleport', './assets/teleport.png');
 		this.load.spritesheet('cat', './assets/sky/cat.png', {frameWidth: 50, frameHeight: 28, startFrame: 0, endFrame: 3})
 		this.load.spritesheet('flier', './assets/sky/flyingBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 5})
+		
+		this.load.image('bamboo', './assets/bamboo.png')
+		this.load.image('bwbamboo', './assets/bwbamboo.png')
 	}
 	create() {
 		this.backgroundMusic =  this.sound.add('sfx_background_sky', {
@@ -70,37 +73,21 @@ class Sky extends Phaser.Scene {
 		// GAME OVER flag
 		this.gameOver = false;
 		
-		let textConfig = {
-			fontFamily: 'Impact',
-			fontSize: '28px',
-			color: '#FFFFFF',
-			align: 'right'
-		};
-		
         // display score
         let scoreConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-        }
-        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, p1Score, scoreConfig);
-
-		// create health display
-		this.healthDisplay = this.add.text(20, 20, 'Health: ' + health, textConfig);
+			fontFamily: 'Impact',
+			fontSize: '40px',
+			color: '#FFFFFF',
+			align: 'right',
+			fixedWidth: 100
+		}
+        this.scoreLeft = this.add.text(500, 20, p1Score, scoreConfig);
 		
 		// style config for GAME OVER
 		let gameOverConfig = {
 			fontFamily: 'Impact',
 			fontSize: '28px',
-			backgroundColor: '#F3B141',
-			color: '#843605',
+			color: '#FFFFFF',
 			align: 'right',
 			padding: {
 				top: 5,
@@ -108,17 +95,31 @@ class Sky extends Phaser.Scene {
 			},
 			fixedWidth: 0
 		}
-		
+
 		// create game over prompts and hide them
 		this.GOPrompt = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 
 			'Game Over', gameOverConfig).setOrigin(0.5).setVisible(false);
-		gameOverConfig.backgroundColor = '#00FF00';
-		gameOverConfig.color = '#000';
 		this.GOInstruction = this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
-			'Press R to Restart or Q to Quit', gameOverConfig).setOrigin(0.5).setVisible(false);
+			'Press SPACE to go to Menu', gameOverConfig).setOrigin(0.5).setVisible(false);
 		
 		// store the initial score
 		this.initScore = p1Score;
+		
+		this.health01 = this.add.image(50, 45, 'bamboo');
+		this.health02 = this.add.image(80, 45, 'bamboo');
+		this.health03 = this.add.image(110, 45, 'bamboo');
+		
+		if (health < 1) {
+			this.health03 = this.add.image(50, 45, 'bwbamboo');
+		} 
+		
+		if (health < 2) {
+			this.health02 = this.add.image(80, 45, 'bwbamboo');
+		}
+		
+		if (health < 3) {
+			this.health01 = this.add.image(110, 45, 'bwbamboo');
+		}
 	
 	}
 	update() {
@@ -150,7 +151,6 @@ class Sky extends Phaser.Scene {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
-			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.flier, this.block02) && !this.isInvicible) {
@@ -158,7 +158,6 @@ class Sky extends Phaser.Scene {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
-			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 		if(this.checkCollison(this.flier, this.block03) && !this.isInvicible) {
@@ -166,7 +165,6 @@ class Sky extends Phaser.Scene {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
-			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
 
@@ -181,7 +179,18 @@ class Sky extends Phaser.Scene {
 		if(this.checkBondaries(this.flier)) {
 			health -= 1;
 			this.flier.y = 200;
-			this.healthDisplay.text = 'Health: ' + health;
+		}
+		
+		if (health < 1) {
+			this.health03 = this.add.image(50, 45, 'bwbamboo');
+		} 
+		
+		if (health < 2) {
+			this.health02 = this.add.image(80, 45, 'bwbamboo');
+		}
+		
+		if (health < 3) {
+			this.health01 = this.add.image(110, 45, 'bwbamboo');
 		}
 		
 		if(health == 0 && !this.gameOver) {
@@ -193,11 +202,7 @@ class Sky extends Phaser.Scene {
 			this.GOPrompt.setVisible(true);
 		}
 		
-		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-            var sceneRandomize = sceneRand_sky[Math.floor(Math.random()*sceneRand_sky.length)];
-			this.scene.start(sceneRandomize);
-	   	}
-		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {
+		if (Phaser.Input.Keyboard.JustDown(keySPACE) && this.gameOver) {
 			this.scene.start("menuScene");
 		}
 	
