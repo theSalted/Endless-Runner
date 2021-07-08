@@ -43,7 +43,7 @@ class Menu extends Phaser.Scene {
 		keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);		
 	}
 	update() {
-		if (Phaser.Input.Keyboard.JustDown(keySPACEy)) {
+		if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
 			if(this.random == 0) {
 				this.scene.start("mountScene");
 			} else if (this.random <= 1) {
