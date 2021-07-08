@@ -220,7 +220,7 @@ class Ocean extends Phaser.Scene {
 			this.block03.update();
 			this.swimmer.update();
 		}
-		if(!this.gameOver && p1Score - this.initScore >= 400) {
+		if(!this.gameOver && p1Score - this.initScore >= 600) {
 			this.teleport.update();
 		}
 	}
