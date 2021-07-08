@@ -14,7 +14,10 @@ let borderPadding = borderUISize / 3;
 let p1Score = 0;
 let health = 3;
 
-var sceneRand = ['mountScene', 'skyScene', 'oceanScene'];
+var sceneRand_ground = ['skyScene', 'oceanScene'];
+var sceneRand_sky = ['mountScene', 'oceanScene'];
+var sceneRand_ocean = ['mountScene', 'skyScene'];
+
 
 // reserve keyboard vars
 let keyLEFT, keyRIGHT, keyDOWN, keySPACE, keyR, keyQ;

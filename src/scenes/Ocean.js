@@ -165,10 +165,10 @@ class Ocean extends Phaser.Scene {
 			this.sound.play('sfx_teleport');
 			this.isInvicible = true;
 			this.backgroundMusic.pause();
-			var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+			var sceneRandomize = sceneRand_ocean[Math.floor(Math.random()*sceneRand_ocean.length)];
 			this.scene.start(sceneRandomize);
 		}
-
+		
 		if(health == 0 && !this.gameOver) {
 			this.backgroundMusic.pause();
 			health = 3;
@@ -177,8 +177,9 @@ class Ocean extends Phaser.Scene {
 			this.GOInstruction.setVisible(true);
 			this.GOPrompt.setVisible(true);
 		}
+		
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-			var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+			var sceneRandomize = sceneRand_ocean[Math.floor(Math.random()*sceneRand_ocean.length)];
 			this.scene.start(sceneRandomize);
 		   }
 		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {

@@ -157,7 +157,7 @@ class Sky extends Phaser.Scene {
 			this.sound.play('sfx_teleport');
 			this.isInvicible = true;
 			this.backgroundMusic.pause();
-            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+            var sceneRandomize = sceneRand_sky[Math.floor(Math.random()*sceneRand_sky.length)];
 			this.scene.start(sceneRandomize);
 		}
 		
@@ -177,7 +177,7 @@ class Sky extends Phaser.Scene {
 		}
 		
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+            var sceneRandomize = sceneRand_sky[Math.floor(Math.random()*sceneRand_sky.length)];
 			this.scene.start(sceneRandomize);
 	   	}
 		if (Phaser.Input.Keyboard.JustDown(keyQ) && this.gameOver) {

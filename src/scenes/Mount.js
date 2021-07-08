@@ -136,7 +136,7 @@ class Mount extends Phaser.Scene {
 			this.sound.play('sfx_teleport');
 			this.isInvicible = true;
 			this.backgroundMusic.pause();
-            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+            var sceneRandomize = sceneRand_ground[Math.floor(Math.random()*sceneRand_ground.length)];
 			this.scene.start(sceneRandomize);
 		}
 
@@ -150,7 +150,7 @@ class Mount extends Phaser.Scene {
 		}
 		
 		if (Phaser.Input.Keyboard.JustDown(keyR) && this.gameOver) {
-            var sceneRandomize = sceneRand[Math.floor(Math.random()*sceneRand.length)];
+            var sceneRandomize = sceneRand_ground[Math.floor(Math.random()*sceneRand_ground.length)];
 			this.scene.start(sceneRandomize);
 		}
 
