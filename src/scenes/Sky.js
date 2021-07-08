@@ -46,9 +46,9 @@ class Sky extends Phaser.Scene {
 		this.runner.play('rolling');
 	
 		// create block
-		this.block01 = new Block(this, game.config.width + 200, 300, 'block').setOrigin(0, 0);
-		this.block02 = new Block(this, game.config.width + 400, 140, 'block').setOrigin(0, 0);
-		this.block03 = new Block(this, game.config.width + 600, 50, 'block').setOrigin(0, 0);
+		this.block01 = new Block(this, game.config.width + 100, 20, 'block').setOrigin(0, 0);
+		this.block02 = new Block(this, game.config.width + 350, 170, 'block').setOrigin(0, 0);
+		this.block03 = new Block(this, game.config.width + 600, 350, 'block').setOrigin(0, 0);
 
 
 		//create teleport
