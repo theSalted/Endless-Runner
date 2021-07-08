@@ -17,7 +17,7 @@ class Ocean extends Phaser.Scene {
 		
 		this.load.image('teleport', './assets/teleport.png');
 		this.load.image('block', './assets/block.png')
-		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
+		this.load.spritesheet('swimmer', './assets/ocean/swimmingBear.png', {frameWidth: 70, frameHeight: 45, startFrame: 0, endFrame: 1})
 	}
 	create() {
 		this.createScene();
@@ -39,17 +39,17 @@ class Ocean extends Phaser.Scene {
 		
 		// create rolling animation for runner
 		this.anims.create({
-			key: 'rolling',
-			frames: this.anims.generateFrameNumbers('runner', { start:0, end: 4, first: 0}),
-			frameRate: 5,
+			key: 'swimming',
+			frames: this.anims.generateFrameNumbers('swimmer', { start:0, end: 1, first: 0}),
+			frameRate: 3,
 			repeat: -1
 		});
 		
 		// create runner object
-		this.runner = new Swimmer(this, 80, 350, 'runner').setOrigin(0, 0);
+		this.swimmer = new Swimmer(this, 80, 350, 'swimmer').setOrigin(0, 0);
 
 		// play rolling animation
-		this.runner.play('rolling');
+		this.swimmer.play('swimming');
 	
 		// create block
 		this.block01 = new Block(this, game.config.width + 100, 20, 'block').setOrigin(0, 0);
@@ -139,21 +139,21 @@ class Ocean extends Phaser.Scene {
 			this.teleport.reset();
 		}
 
-		if(this.checkCollison(this.runner, this.block01) && !this.isInvicible) {
+		if(this.checkCollison(this.swimmer, this.block01) && !this.isInvicible) {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
 			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
-		if(this.checkCollison(this.runner, this.block02) && !this.isInvicible) {
+		if(this.checkCollison(this.swimmer, this.block02) && !this.isInvicible) {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
 			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
-		if(this.checkCollison(this.runner, this.block03) && !this.isInvicible) {
+		if(this.checkCollison(this.swimmer, this.block03) && !this.isInvicible) {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
@@ -161,7 +161,7 @@ class Ocean extends Phaser.Scene {
 			this.isInvicible = true;
 		}
 
-		if(this.checkCollison(this.runner, this.teleport) && !this.isInvicible) {
+		if(this.checkCollison(this.swimmer, this.teleport) && !this.isInvicible) {
 			this.sound.play('sfx_teleport');
 			this.isInvicible = true;
 			this.backgroundMusic.pause();
@@ -186,7 +186,7 @@ class Ocean extends Phaser.Scene {
 			this.scene.start("menuScene");
 		}
 	
-		if(!(this.checkCollison(this.runner, this.block01) || this.checkCollison(this.runner, this.block02) || this.checkCollison(this.runner, this.block03)) && this.isInvicible) {
+		if(!(this.checkCollison(this.swimmer, this.block01) || this.checkCollison(this.swimmer, this.block02) || this.checkCollison(this.swimmer, this.block03)) && this.isInvicible) {
 			this.isInvicible = false;
 		}
 		
@@ -195,7 +195,7 @@ class Ocean extends Phaser.Scene {
 			this.block02.update();
 			this.block03.update();
 			this.teleport.update();
-			this.runner.update();
+			this.swimmer.update();
 		}
 	}
 	checkCollison(runner, block) {

@@ -40,10 +40,10 @@ class Sky extends Phaser.Scene {
 		});
 		
 		// create runner object
-		this.runner = new Flier(this, 80, 200, 'flier').setOrigin(0, 0);
+		this.flier = new Flier(this, 80, 200, 'flier').setOrigin(0, 0);
 
 		// play rolling animation
-		this.runner.play('rolling');
+		this.flier.play('rolling');
 	
 		// create block
 		this.block01 = new Block(this, game.config.width + 100, 20, 'block').setOrigin(0, 0);
@@ -131,21 +131,21 @@ class Sky extends Phaser.Scene {
 			this.teleport.reset();
 		}
 
-		if(this.checkCollison(this.runner, this.block01) && !this.isInvicible) {
+		if(this.checkCollison(this.flier, this.block01) && !this.isInvicible) {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
 			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
-		if(this.checkCollison(this.runner, this.block02) && !this.isInvicible) {
+		if(this.checkCollison(this.flier, this.block02) && !this.isInvicible) {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
 			this.healthDisplay.text = 'Health: ' + health;
 			this.isInvicible = true;
 		}
-		if(this.checkCollison(this.runner, this.block03) && !this.isInvicible) {
+		if(this.checkCollison(this.flier, this.block03) && !this.isInvicible) {
 			p1Score -= 10;
 			this.scoreLeft.text = p1Score;
 			health -= 1;
@@ -153,7 +153,7 @@ class Sky extends Phaser.Scene {
 			this.isInvicible = true;
 		}
 
-		if(this.checkCollison(this.runner, this.teleport) && !this.isInvicible) {
+		if(this.checkCollison(this.flier, this.teleport) && !this.isInvicible) {
 			this.sound.play('sfx_teleport');
 			this.isInvicible = true;
 			this.backgroundMusic.pause();
@@ -161,9 +161,9 @@ class Sky extends Phaser.Scene {
 			this.scene.start(sceneRandomize);
 		}
 		
-		if(this.checkBondaries(this.runner)) {
+		if(this.checkBondaries(this.flier)) {
 			health -= 1;
-			this.runner.y = 200;
+			this.flier.y = 200;
 			this.healthDisplay.text = 'Health: ' + health;
 		}
 		
@@ -184,7 +184,7 @@ class Sky extends Phaser.Scene {
 			this.scene.start("menuScene");
 		}
 	
-		if(!(this.checkCollison(this.runner, this.block01) || this.checkCollison(this.runner, this.block02) || this.checkCollison(this.runner, this.block03)) && this.isInvicible) {
+		if(!(this.checkCollison(this.flier, this.block01) || this.checkCollison(this.flier, this.block02) || this.checkCollison(this.flier, this.block03)) && this.isInvicible) {
 			this.isInvicible = false;
 		}
 		
@@ -193,7 +193,7 @@ class Sky extends Phaser.Scene {
 			this.block02.update();
 			this.block03.update();
 			this.teleport.update();
-			this.runner.update();
+			this.flier.update();
 		}
 
 	}

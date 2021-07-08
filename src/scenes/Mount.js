@@ -11,7 +11,7 @@ class Mount extends Phaser.Scene {
 		this.load.image('forest_mount', './assets/mount/forest.png');
 		this.load.image('block', './assets/block.png');
 		this.load.image('teleport', './assets/teleport.png');
-		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
+		this.load.spritesheet('runner', './assets/mount/drivingBear.png', {frameWidth: 54, frameHeight: 55, startFrame: 0, endFrame: 2})
 	}
 	create() {
 		this.backgroundMusic =  this.sound.add('sfx_mount', {
@@ -35,8 +35,8 @@ class Mount extends Phaser.Scene {
 		
 		// create rolling animation for runner
 		this.anims.create({
-			key: 'rolling',
-			frames: this.anims.generateFrameNumbers('runner', { start:0, end: 4, first: 0}),
+			key: 'driving',
+			frames: this.anims.generateFrameNumbers('runner', { start:0, end: 1, first: 0}),
 			frameRate: 5,
 			repeat: -1
 		});
@@ -59,7 +59,7 @@ class Mount extends Phaser.Scene {
 		this.runner = new Runner(this, 80, 350, 'runner').setOrigin(0, 0);
 
 		// play rolling animation
-		this.runner.play('rolling');
+		this.runner.play('driving');
 		
 		// create block
 		this.block = new Block(this, game.config.width, 350, 'block').setOrigin(0, 0);
