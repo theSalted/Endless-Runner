@@ -22,8 +22,13 @@ We decided to use global variables for Health and Score in order to keep track o
 levels (when you portal to another scene).  It took some time to figure out, because the Phaser 3 documentation
 is very inconvenient to use.  
 We believe that our game has a very good visual design with a very original art for all in-game assets.
-*/
 
+For our music we modified some copyright free audio samples to suit our game's atmosphere.
+AdhesiveWombat - Night Shade ♫ NO COPYRIGHT 8-bit Music
+Eric Skiff - Underclocked ♫ NO COPYRIGHT 8-bit Music
+Kubbi - Digestive biscuit ♫ NO COPYRIGHT 8-bit Music
+And generated audio effects by using online jsfrx software
+*/
 
 let config = {
 	type: Phaser.CANVAS,
