@@ -11,5 +11,10 @@ let game = new Phaser.Game(config);
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
+let p1Score = 0;
+let health = 3;
+
+var sceneRand = ['mountScene', 'skyScene'];
+
 // reserve keyboard vars
 let keyLEFT, keyRIGHT, keyDOWN, keySPACE, keyR, keyQ;
