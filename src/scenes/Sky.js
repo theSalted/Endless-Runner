@@ -12,7 +12,7 @@ class Sky extends Phaser.Scene {
 		this.load.image('cloud_sky', './assets/sky/cloud.png');
 		this.load.image('block', './assets/block.png');
 		this.load.image('teleport', './assets/teleport.png');
-		this.load.spritesheet('runner', './assets/runnerBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 4})
+		this.load.spritesheet('flier', './assets/sky/flyingBear.png', {frameWidth: 32, frameHeight: 64, startFrame: 0, endFrame: 5})
 	}
 	create() {
 		this.backgroundMusic =  this.sound.add('sfx_background_sky', {
@@ -34,13 +34,13 @@ class Sky extends Phaser.Scene {
 		// create rolling animation for runner
 		this.anims.create({
 			key: 'rolling',
-			frames: this.anims.generateFrameNumbers('runner', { start:0, end: 4, first: 0}),
-			frameRate: 5,
+			frames: this.anims.generateFrameNumbers('flier', { start:0, end: 5, first: 0}),
+			frameRate: 6,
 			repeat: -1
 		});
 		
 		// create runner object
-		this.runner = new Flier(this, 80, 200, 'runner').setOrigin(0, 0);
+		this.runner = new Flier(this, 80, 200, 'flier').setOrigin(0, 0);
 
 		// play rolling animation
 		this.runner.play('rolling');
